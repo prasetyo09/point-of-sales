@@ -28,16 +28,16 @@
                         <span class="fs-4 fw-bold">Prasetyo - Point Of Sales</span>
                     </div>
 
-                    <h3 class="fw-bold mb-3">Kelola Transaksi Penjualan Lebih Cepat & Mudah</h3>
+                    <h3 class="fw-bold mb-3">Manage sales transactions faster and more easily.</h3>
                     <p class="text-white-50 small mb-0">
-                        Sistem Point of Sale terintegrasi untuk kasir, manajemen inventaris, dan laporan harian multi-cabang.
+                        Integrated Point of Sale system for cashier operations, inventory management, and multi-branch daily reporting.
                     </p>
                 </div>
 
                 <!-- Footer Sisi Kiri -->
                 <div class="pt-4 mt-4 border-top border-white border-opacity-25 d-flex align-items-center gap-2 text-white-50 small">
                     <i class="bi bi-shield-check text-warning fs-5"></i>
-                    <span>Sistem Terenkripsi & Siap Digunakan.</span>
+                    <span>Encrypted and ready-to-use system</span>
                 </div>
             </div>
 
@@ -88,7 +88,7 @@
                     <div class="mb-3">
                         <div class="d-flex justify-content-between">
                             <label for="password" class="form-label small fw-semibold text-secondary text-uppercase">PIN / Password</label>
-                            <a href="#" class="text-decoration-none small text-primary">Lupa PIN?</a>
+                            {{-- <a href="#" class="text-decoration-none small text-primary">Forgot PIN?</a> --}}
                         </div>
                         <div class="input-group">
                             <span class="input-group-text bg-light border-end-0 text-muted">

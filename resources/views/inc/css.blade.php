@@ -9,3 +9,5 @@
 <link rel="stylesheet" href="{{ asset('assets/assets/libs/flatpickr/flatpickr.min.css') }}">
 
 <link rel="stylesheet" href="{{ asset('assets/assets/css/main.css') }}">
+
+<link href="https://cdn.datatables.net/v/dt/dt-3.0.1/datatables.min.css" rel="stylesheet">

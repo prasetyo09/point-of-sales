@@ -11,6 +11,8 @@
 <meta name="author" content="Spark Admin Team">
 
 @include('inc.css')
+
+
 </head>
 
 <body>
@@ -39,19 +41,25 @@
                 </a>
             </li>
             <li class="sidebar-menu-item">
-                <a href="{{ url('role') }}" class="sidebar-menu-link" id="menu-overview" title="Overview">
+                <a href="{{ url('user') }}" class="sidebar-menu-link {{ request()->is('user') ? 'active' : '' }}" id="menu-overview" title="Overview">
+                <i class="bi bi-grid-fill"></i>
+                <span>User</span>
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a href="{{ url('role') }}" class="sidebar-menu-link {{ request()->is('role') ? 'active' : '' }}" id="menu-overview" title="Overview">
                 <i class="bi bi-grid-fill"></i>
                 <span>Role</span>
                 </a>
             </li>
             <li class="sidebar-menu-item">
-                <a href="index.html" class="sidebar-menu-link" id="menu-overview" title="Overview">
+                <a href="{{ url('category') }}" class="sidebar-menu-link {{ request()->is('category') ? 'active' : '' }}" id="menu-overview" title="Overview">
                 <i class="bi bi-grid-fill"></i>
                 <span>Category</span>
                 </a>
             </li>
             <li class="sidebar-menu-item">
-                <a href="index.html" class="sidebar-menu-link" id="menu-overview" title="Overview">
+                <a href="{{ url('product') }}" class="sidebar-menu-link {{ request()->is('product') ? 'active' : '' }}" id="menu-overview" title="Overview">
                 <i class="bi bi-grid-fill"></i>
                 <span>Product</span>
                 </a>
@@ -117,7 +125,7 @@
         onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop'">
     <div class="sidebar-profile-info">
         <div class="sidebar-profile-name">Administrator</div>
-        <div class="sidebar-profile-email">admin@email.com</div>
+        <div class="sidebar-profile-email">admin.id@email.com</div>
     </div>
     </div>
 </div>
@@ -133,36 +141,43 @@
 
     <!-- START: Top Navbar Component -->
     <header class="navbar-custom">
-    <div class="navbar-left">
-        <!-- Desktop sidebar toggle (visible on large screens only) -->
-        <button class="btn-desktop-toggle d-none d-xl-flex align-items-center justify-content-center me-3"
-        id="desktop-sidebar-toggle" aria-label="Minimize Sidebar">
-        <i class="bi bi-chevron-bar-left"></i>
-        </button>
-        <!-- Mobile sidebar toggle -->
-        <button class="sidebar-toggle-btn me-2" id="sidebar-toggle" aria-label="Toggle Navigation">
-        <i class="bi bi-list"></i>
-        </button>
+        <div class="navbar-left">
+            <!-- Desktop sidebar toggle (visible on large screens only) -->
+            {{-- <button class="btn-desktop-toggle d-none d-xl-flex align-items-center justify-content-center me-3"
+            id="desktop-sidebar-toggle" aria-label="Minimize Sidebar">
+            <i class="bi bi-chevron-bar-left"></i>
+            </button> --}}
+            <!-- Mobile sidebar toggle -->
+            <a href="{{ url()->previous() }}" class="btn-desktop-toggle d-xl-flex align-items-center justify-content-center me-3" id="desktop-sidebar-toggle" aria-label="Minimize Sidebar"><i class="bi bi-chevron-bar-left"></i></a>
 
-        <!-- Quick Actions Dropdown -->
-        <div class="dropdown ms-2">
-        <button class="btn-quick-action dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"
-            id="quick-actions-dropdown">
-            <i class="bi bi-plus-lg"></i>
-            <span>Create</span>
-        </button>
-        <ul class="dropdown-menu dropdown-menu-quick-action" aria-labelledby="quick-actions-dropdown">
-            <li class="dropdown-header">Quick Action Shortcuts</li>
-            <li><a class="dropdown-item" href="#"><i class="bi bi-file-earmark-plus"></i> New Invoice</a></li>
-            <li><a class="dropdown-item" href="#"><i class="bi bi-person-plus"></i> New User</a></li>
-            <li><a class="dropdown-item" href="#"><i class="bi bi-box-seam"></i> New Product</a></li>
-            <li>
-            <hr class="dropdown-divider">
-            </li>
-            <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i> System Settings</a></li>
-        </ul>
+            <button class="sidebar-toggle-btn me-2" id="sidebar-toggle" aria-label="Toggle Navigation">
+            <i class="bi bi-list"></i>
+            </button>
+
+            <!-- Quick Actions Dropdown -->
+            <div class="dropdown ms-2">
+                @isset($btnUrl)
+                    <a href="{{ $btnUrl }}" class="btn btn-success">
+                        {{ $btnTitle ?? '' }}
+                    </a>
+                @endisset
+            {{-- <button class="btn-quick-action dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                id="quick-actions-dropdown">
+                <i class="bi bi-plus-lg"></i>
+                <span>Create</span>
+            </button> --}}
+            <ul class="dropdown-menu dropdown-menu-quick-action" aria-labelledby="quick-actions-dropdown">
+                <li class="dropdown-header">Quick Action Shortcuts</li>
+                <li><a class="dropdown-item" href="#"><i class="bi bi-file-earmark-plus"></i> New Invoice</a></li>
+                <li><a class="dropdown-item" href="#"><i class="bi bi-person-plus"></i> New User</a></li>
+                <li><a class="dropdown-item" href="#"><i class="bi bi-box-seam"></i> New Product</a></li>
+                <li>
+                <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i> System Settings</a></li>
+            </ul>
+            </div>
         </div>
-    </div>
 
     <!-- Mid navbar: search pill -->
     <div class="navbar-search-wrapper">
@@ -255,8 +270,8 @@
     <!-- START: Page Header Banner -->
     <div class="page-header">
         <div>
-            <h1 class="page-title">Blank Page</h1>
-            <p class="page-subtitle">A blank starter template page for custom extensions.</p>
+            <h1 class="page-title">{{ $title ?? ''}}</h1>
+            <p class="page-subtitle">{{ $subtitle ?? '' }}</p>
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
@@ -268,9 +283,8 @@
     <!-- END: Page Header Banner -->
 
     <!-- START: Blank Page Content Area -->
-    <div class="card p-4 border-light shadow-sm text-center">
+    <div class="card p-4 border-light shadow-sm">
         <main class="content">
-            <h1 class="page-title fw-bold fs-2">{{ $title ?? ''}}</h1>
             @yield('content')
         </main>
     </div>
@@ -303,6 +317,12 @@
 
     <!-- Local dashboard interactions controller -->
     <script src="assets/js/dashboard.js"></script>
+    <script src="https://cdn.datatables.net/v/dt/dt-3.0.1/datatables.min.js" ></script>
+    <script>
+        const table = new DataTable('#myTable', {
+        // Configuration options
+        });
+    </script>
 </body>
 
 </html>
