@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-lg-12">
             <table class="table table-bordered table-responsive">
-                <thead>
+                <thead class="table-success">
                     <tr>
                         <th class="text-center">No</th>
                         <th class="text-center">Category Name</th>

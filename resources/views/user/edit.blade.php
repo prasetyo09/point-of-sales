@@ -6,7 +6,7 @@
             {{-- <div class="d-flex justify-content-end">
                 <a href="{{ url('role') }}" class="btn btn-success mb-3"><i class="bi bi-arrow-left"></i>Back</a>
             </div> --}}
-            <form action="{{ route('user.update', $users->id) }}" method="post">
+            <form action="{{ route('user.update', $users->id) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="mb-3">
@@ -18,12 +18,22 @@
                     <input type="email" name="email" id="email" class="form-control" value="{{ $users->email }}">
                 </div>
                 <div class="mb-3">
+                    <label for="" class="form-label fw-bold">Role</label>
+                    <select name="role_id" id="" class="form-control">
+                        @foreach ($roles as $v)
+                            <option {{ $users->role_id == $v->id ? 'selected' : '' }} value="{{ $v->id }}">
+                                {{ $v->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="mb-3">
                     <label for="" class="form-label fw-bold">Password</label>
                     <input type="password" name="password" id="password" class="form-control mb-2" placeholder="Fill this in if you want to change your password">
                     <button class="btn btn-outline-secondary" type="button" id="togglePassword">
                         <i class="bi bi-eye" id="toggleIcon"></i>
                     </button>
-                    <div class="form-text">Klik ikon mata untuk melihat/menyembunyikan password.</div>
+                    <div class="form-text">Click to see/hide</div>
                 </div>
                 <button type="submit" name="save" class="btn btn-success">Save Changes</button>
                 <button type="reset" class="btn btn-outline-success">Reset</button>

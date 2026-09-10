@@ -25,6 +25,7 @@
                         <th class="text-center">No</th>
                         <th class="text-center">Name</th>
                         <th class="text-center">Email</th>
+                        <th class="text-center">Role</th>
                         <th class="text-center">Action</th>
                     </tr>
                 </thead>
@@ -34,6 +35,7 @@
                         <td class="text-center">{{ $index + 1 }}</td>
                         <td class="text-center">{{ $v->name }}</td>
                         <td class="text-center">{{ $v->email }}</td>
+                        <td class="text-center">{{ $v->role->name }}</td>
                         <td class="text-center">
                             <a href="{{ route('user.edit', $v->id) }}" class="btn btn-success">Edit</a>
                             <form action="{{ route('user.destroy', $v->id) }}" method="post" class="d-inline">

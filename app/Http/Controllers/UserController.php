@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\Role;
 
 class UserController extends Controller
 {
@@ -16,7 +18,7 @@ class UserController extends Controller
         $btnUrl = route('user.create');
         $subtitle = "information regarding users";
         $title = "User";
-        $users = User::orderBy('id', 'ASC')->get();
+        $users = User::with('role')->orderBy('id', 'ASC')->get();
         return view('user.index', compact('users', 'title', 'btnTitle', 'btnUrl', 'subtitle'));
     }
 
@@ -25,9 +27,10 @@ class UserController extends Controller
      */
     public function create()
     {
+        $roles = Role::get();
         $title = "Add User";
         $subtitle = "Add user in accordance with the rules.";
-        return view('user.create', compact('title', 'subtitle'));
+        return view('user.create', compact('title', 'subtitle', 'roles'));
     }
 
     /**
@@ -38,10 +41,11 @@ class UserController extends Controller
         User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'role_id' => $request->role_id,
             'password' => $request->password
         ]);
 
-        return redirect()->to('user');
+        return redirect()->to('user')->with('success', 'User berhasil disimpa');
     }
 
     /**
@@ -57,10 +61,11 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
+        $roles = Role::get();
         $users = User::find($id);
         $title = "Edit User";
         $subtitle = "Edit the user in accordance with the rules.";
-        return view('user.edit', compact('users', 'title', 'subtitle'));
+        return view('user.edit', compact('users', 'title', 'subtitle', 'roles'));
     }
 
     /**
@@ -68,14 +73,29 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // dd($request->all());
         $user = User::findOrFail($id);
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password
+
+        $request->validate([
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|email|unique:users,email,' . $user->id,
+            'role_id'  => 'required',
+            'password' => 'nullable|min:6'
         ]);
 
-        return redirect()->to('user');
+        $data = [
+            'name'    => $request->name,
+            'email'   => $request->email,
+            'role_id' => $request->role_id
+        ];
+
+        if ($request->filled('password')) {
+            $data['password'] = Hash::make($request->password);
+        }
+
+        $user->update($data);
+
+        return redirect()->to('user')->with('success', 'User berhasil diperbarui!');
     }
 
     /**
@@ -86,6 +106,6 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
 
-        return redirect()->to('user');
+        return redirect()->to('user')->with('success', 'User berhasil dihapus!');
     }
 }
