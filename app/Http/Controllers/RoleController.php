@@ -39,7 +39,7 @@ class RoleController extends Controller
             'name' => $request->name
         ]);
 
-        return redirect()->to('role');
+        return redirect()->to('role')->with('success', 'Role successfully saved!');
     }
 
     /**
@@ -71,7 +71,7 @@ class RoleController extends Controller
             'name' => $request->name
         ]);
 
-        return redirect()->to('role');
+        return redirect()->to('role')->with('success', 'Role successfully updated!');
     }
 
     /**
@@ -82,6 +82,6 @@ class RoleController extends Controller
         $role = Role::findOrFail($id);
         $role->delete();
 
-        return redirect()->to('role');
+        return redirect()->to('role')->with('success', 'Role successfully deleted!');
     }
 }

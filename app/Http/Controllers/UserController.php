@@ -14,6 +14,7 @@ class UserController extends Controller
      */
     public function index()
     {
+        $directInfo = 'user';
         $btnTitle = "Add New User";
         $btnUrl = route('user.create');
         $subtitle = "information regarding users";
@@ -45,7 +46,7 @@ class UserController extends Controller
             'password' => $request->password
         ]);
 
-        return redirect()->to('user')->with('success', 'User berhasil disimpa');
+        return redirect()->to('user')->with('success', 'User successfully saved!');
     }
 
     /**
@@ -95,7 +96,7 @@ class UserController extends Controller
 
         $user->update($data);
 
-        return redirect()->to('user')->with('success', 'User berhasil diperbarui!');
+        return redirect()->to('user')->with('success', 'User successfully updated!');
     }
 
     /**
@@ -106,6 +107,6 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
 
-        return redirect()->to('user')->with('success', 'User berhasil dihapus!');
+        return redirect()->to('user')->with('success', 'User successfully deleted!');
     }
 }

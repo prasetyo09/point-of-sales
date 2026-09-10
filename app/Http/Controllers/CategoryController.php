@@ -39,7 +39,7 @@ class CategoryController extends Controller
             'name' => $request->name
         ]);
 
-        return redirect()->to('category');
+        return redirect()->to('category')->with('success', 'Category successfully saved!');
     }
 
     /**
@@ -70,7 +70,7 @@ class CategoryController extends Controller
             'name' => $request->name
         ]);
 
-        return redirect()->to('category');
+        return redirect()->to('category')->with('success', 'Category successfully updated!');
     }
 
     /**
@@ -81,6 +81,6 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         $category->delete();
 
-        return redirect()->to('category');
+        return redirect()->to('category')->with('success', 'Category successfully deleted!');
     }
 }

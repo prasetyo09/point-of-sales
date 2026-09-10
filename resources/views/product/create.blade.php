@@ -35,8 +35,8 @@
                     <textarea name="description" id="description" class="form-control"></textarea>
                 </div>
 
-                <button type="submit" name="save" class="btn btn-primary">Save</button>
-                <button type="reset" class="btn btn-outline-primary">Reset</button>
+                <button type="submit" name="save" class="btn btn-success">Save</button>
+                <button type="reset" class="btn btn-outline-success">Reset</button>
             </form>
         </div>
     </div>

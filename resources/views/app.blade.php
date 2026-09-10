@@ -42,25 +42,25 @@
             </li>
             <li class="sidebar-menu-item">
                 <a href="{{ url('user') }}" class="sidebar-menu-link {{ request()->is('user') ? 'active' : '' }}" id="menu-overview" title="Overview">
-                <i class="bi bi-grid-fill"></i>
+                <i class="bi bi-person"></i>
                 <span>User</span>
                 </a>
             </li>
             <li class="sidebar-menu-item">
                 <a href="{{ url('role') }}" class="sidebar-menu-link {{ request()->is('role') ? 'active' : '' }}" id="menu-overview" title="Overview">
-                <i class="bi bi-grid-fill"></i>
+                <i class="bi bi-file-person-fill"></i>
                 <span>Role</span>
                 </a>
             </li>
             <li class="sidebar-menu-item">
                 <a href="{{ url('category') }}" class="sidebar-menu-link {{ request()->is('category') ? 'active' : '' }}" id="menu-overview" title="Overview">
-                <i class="bi bi-grid-fill"></i>
+                <i class="bi bi-tag"></i>
                 <span>Category</span>
                 </a>
             </li>
             <li class="sidebar-menu-item">
                 <a href="{{ url('product') }}" class="sidebar-menu-link {{ request()->is('product') ? 'active' : '' }}" id="menu-overview" title="Overview">
-                <i class="bi bi-grid-fill"></i>
+                <i class="bi bi-bag"></i>
                 <span>Product</span>
                 </a>
             </li>
@@ -180,12 +180,20 @@
         </div>
 
     <!-- Mid navbar: search pill -->
-    <div class="navbar-search-wrapper">
-        <input type="text" class="navbar-search-input" placeholder="Search anything in Spark..." id="main-search">
-        <button class="navbar-search-btn" aria-label="Search">
-        <i class="bi bi-search"></i>
+    <form action="{{ route('search') }}" method="GET" class="navbar-search-wrapper">
+        <input 
+            type="text" 
+            name="keyword" 
+            class="navbar-search-input" 
+            placeholder="Search anything in Spark..." 
+            id="main-search" 
+            value="{{ request('keyword') }}"
+            
+        >
+        <button type="submit" class="navbar-search-btn" aria-label="Search">
+            <i class="bi bi-search"></i>
         </button>
-    </div>
+    </form>
 
     <!-- Right actions -->
     <div class="navbar-actions">
@@ -275,8 +283,10 @@
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
-            <li class="breadcrumb-item"><a href="index.html" class="text-decoration-none text-muted-green">Home</a></li>
-            <li class="breadcrumb-item active text-main" aria-current="page">Blank Page</li>
+            <li class="breadcrumb-item"><a href="{{ url('dashboard') }}" class="text-decoration-none text-muted-green">Home</a></li>
+            @isset($directInfo)
+                <li class="breadcrumb-item active text-main" aria-current="page">{{ request()->is($directInfo) ? '$title' : ''}}</li>
+            @endisset
             </ol>
         </nav>
     </div>
@@ -312,11 +322,9 @@
 
     </div>
 
-    <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-
 
     <!-- Local dashboard interactions controller -->
-    <script src="assets/js/dashboard.js"></script>
+    @include('inc.js')
     <script src="https://cdn.datatables.net/v/dt/dt-3.0.1/datatables.min.js" ></script>
     <script>
         const table = new DataTable('#myTable', {

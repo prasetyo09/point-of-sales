@@ -11,7 +11,9 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('dashboard.index');
+        $subtitle = "Dashboard Page";
+        $title = "Dashboard";   
+        return view('dashboard.index', compact('title', 'subtitle'));
     }
 
     /**
