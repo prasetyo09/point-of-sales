@@ -1,4 +1,8 @@
 @extends('app')
+@section('breadcrumb')
+    <li class="breadcrumb-item"><a href="{{ url('dashboard') }}" class="text-decoration-none text-muted-green">Dashboard</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('role') }}" class="text-decoration-none text-muted">Role</a></li>
+@endsection
 @section('content')
 <!-- Alert Notifikasi -->
 @if (session('success'))

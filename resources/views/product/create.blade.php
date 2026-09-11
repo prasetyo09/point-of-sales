@@ -1,4 +1,9 @@
 @extends('app')
+@section('breadcrumb')
+    <li class="breadcrumb-item"><a href="{{ url('dashboard') }}" class="text-decoration-none text-muted-green">Dashboard</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('Product') }}" class="text-decoration-none text-muted">Product</a></li>
+    <li class="breadcrumb-item active text-main" aria-current="page">Add New Product</li>
+@endsection
 @section('content')
 <div class="container-fluid">
     <div class="row">

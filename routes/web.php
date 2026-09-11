@@ -27,4 +27,5 @@ Route::middleware('auth')->group(function(){
     Route::resource('product', ProductController::class);
 
     Route::get('/search', [SearchController::class, 'index'])->name('search');
+    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });

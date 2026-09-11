@@ -25,7 +25,7 @@
                         <div class="bg-white bg-opacity-25 rounded-3 p-2 d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;">
                             <i class="bi bi-shop fs-4 text-white"></i>
                         </div>
-                        <span class="fs-4 fw-bold">Prasetyo - Point Of Sales</span>
+                        <span class="fs-4 fw-bold">Point of Sales - Laundry</span>
                     </div>
 
                     <h3 class="fw-bold mb-3">Manage sales transactions faster and more easily.</h3>

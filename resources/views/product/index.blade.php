@@ -1,6 +1,10 @@
 @extends('app')
+@section('breadcrumb')
+    <li class="breadcrumb-item"><a href="{{ url('dashboard') }}" class="text-decoration-none text-muted-green">Dashboard</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('product') }}" class="text-decoration-none text-muted">Product</a></li>
+@endsection
 @section('content')
- <!-- Alert Notifikasi -->
+<!-- Alert Notifikasi -->
 @if (session('success'))
     <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
         <i class="bi bi-check-circle-fill me-2"></i>

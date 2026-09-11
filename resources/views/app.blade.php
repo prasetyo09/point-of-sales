@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Blank Page - Spark Admin Premium Bootstrap 5 Admin Dashboard Template</title>
+<title>{{ $title ?? '' }} / Laundry POS </title>
 
 <!-- SEO Optimization -->
 <meta name="description" content="Blank Page - Spark Admin Premium Bootstrap 5 Admin Dashboard Template">
@@ -68,65 +68,64 @@
     </div>
 
     <!-- Group: Components -->
-    <div class="sidebar-menu-section">
+    {{-- <div class="sidebar-menu-section">
         <div class="sidebar-menu-title">Components</div>
         <ul class="sidebar-menu-list">
-        <li class="sidebar-menu-item">
-            <a href="tables-basic.html" class="sidebar-menu-link" id="menu-basictables" title="Basic Tables">
-            <i class="bi bi-table"></i>
-            <span>Basic Tables</span>
-            </a>
-        </li>
-        <li class="sidebar-menu-item">
-            <a href="ui-forms.html" class="sidebar-menu-link" id="menu-uiforms" title="Forms and Input">
-            <i class="bi bi-input-cursor-text"></i>
-            <span>Forms & Input</span>
-            </a>
-        </li>
-        <li class="sidebar-menu-item">
-            <a href="ui-buttons.html" class="sidebar-menu-link" id="menu-uibuttons" title="Buttons">
-            <i class="bi bi-menu-button-wide-fill"></i>
-            <span>Buttons & Alerts</span>
-            </a>
-        </li>
+            <li class="sidebar-menu-item">
+                <a href="tables-basic.html" class="sidebar-menu-link" id="menu-basictables" title="Basic Tables">
+                <i class="bi bi-table"></i>
+                <span>Basic Tables</span>
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a href="ui-forms.html" class="sidebar-menu-link" id="menu-uiforms" title="Forms and Input">
+                <i class="bi bi-input-cursor-text"></i>
+                <span>Forms & Input</span>
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a href="ui-buttons.html" class="sidebar-menu-link" id="menu-uibuttons" title="Buttons">
+                <i class="bi bi-menu-button-wide-fill"></i>
+                <span>Buttons & Alerts</span>
+                </a>
+            </li>
         </ul>
-    </div>
+    </div> --}}
 
     <!-- Group: Pages -->
     <div class="sidebar-menu-section">
-        <div class="sidebar-menu-title">Pages</div>
-        <ul class="sidebar-menu-list">
-        <li class="sidebar-menu-item">
-            <a href="page-blank.html" class="sidebar-menu-link active" id="menu-blankpage" title="Blank Page">
-            <i class="bi bi-file-earmark"></i>
-            <span>Blank Page</span>
-            </a>
-        </li>
-        <li class="sidebar-menu-item">
-            <a href="page-login.html" class="sidebar-menu-link" id="menu-loginpage" title="Login Page">
-            <i class="bi bi-box-arrow-in-right"></i>
-            <span>Login Screen</span>
-            </a>
-        </li>
-        <li class="sidebar-menu-item">
-            <a href="page-404.html" class="sidebar-menu-link" id="menu-404" title="404 Page">
-            <i class="bi bi-slash-circle"></i>
-            <span>Error 404</span>
-            </a>
-        </li>
-
-        </ul>
-    </div>
+        <div class="sidebar-menu-title"></div>
+        {{-- <ul class="sidebar-menu-list">
+            <li class="sidebar-menu-item">
+                <a href="page-blank.html" class="sidebar-menu-link active" id="menu-blankpage" title="Blank Page">
+                <i class="bi bi-file-earmark"></i>
+                <span>Blank Page</span>
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a href="page-login.html" class="sidebar-menu-link" id="menu-loginpage" title="Login Page">
+                <i class="bi bi-box-arrow-in-right"></i>
+                <span>Login Screen</span>
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a href="page-404.html" class="sidebar-menu-link" id="menu-404" title="404 Page">
+                <i class="bi bi-slash-circle"></i>
+                <span>Error 404</span>
+                </a>
+            </li>
+        </ul> --}}
+        </div>
     </div>
 
     <!-- Sidebar Profile Card (Dynamic Footer) -->
     <div class="sidebar-profile">
-    <img src="assets/images/avatar.png" alt="Administrator" class="sidebar-profile-img"
-        onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop'">
-    <div class="sidebar-profile-info">
-        <div class="sidebar-profile-name">Administrator</div>
-        <div class="sidebar-profile-email">admin.id@email.com</div>
-    </div>
+        <img src="assets/images/avatar.png" alt="Administrator" class="sidebar-profile-img"
+            onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop'">
+        <div class="sidebar-profile-info">
+            <div class="sidebar-profile-name">{{ Auth::user()->name ?? 'Pengguna' }}</div>
+            <div class="sidebar-profile-email">{{ Auth::user()->email ?? '' }}</div>
+        </div>
     </div>
 </div>
 <!-- ==========================================
@@ -166,29 +165,29 @@
                 <i class="bi bi-plus-lg"></i>
                 <span>Create</span>
             </button> --}}
-            <ul class="dropdown-menu dropdown-menu-quick-action" aria-labelledby="quick-actions-dropdown">
-                <li class="dropdown-header">Quick Action Shortcuts</li>
-                <li><a class="dropdown-item" href="#"><i class="bi bi-file-earmark-plus"></i> New Invoice</a></li>
-                <li><a class="dropdown-item" href="#"><i class="bi bi-person-plus"></i> New User</a></li>
-                <li><a class="dropdown-item" href="#"><i class="bi bi-box-seam"></i> New Product</a></li>
-                <li>
-                <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i> System Settings</a></li>
-            </ul>
+                <ul class="dropdown-menu dropdown-menu-quick-action" aria-labelledby="quick-actions-dropdown">
+                    <li class="dropdown-header">Quick Action Shortcuts</li>
+                    <li><a class="dropdown-item" href="#"><i class="bi bi-file-earmark-plus"></i> New Invoice</a></li>
+                    <li><a class="dropdown-item" href="#"><i class="bi bi-person-plus"></i> New User</a></li>
+                    <li><a class="dropdown-item" href="#"><i class="bi bi-box-seam"></i> New Product</a></li>
+                    <li>
+                    <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i> System Settings</a></li>
+                </ul>
             </div>
         </div>
 
     <!-- Mid navbar: search pill -->
     <form action="{{ route('search') }}" method="GET" class="navbar-search-wrapper">
-        <input 
-            type="text" 
-            name="keyword" 
-            class="navbar-search-input" 
-            placeholder="Search anything in Spark..." 
-            id="main-search" 
+        <input
+            type="text"
+            name="keyword"
+            class="navbar-search-input"
+            placeholder="Search anything in Spark..."
+            id="main-search"
             value="{{ request('keyword') }}"
-            
+
         >
         <button type="submit" class="navbar-search-btn" aria-label="Search">
             <i class="bi bi-search"></i>
@@ -256,19 +255,31 @@
         <button class="navbar-profile-btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
             aria-expanded="false" id="profile-dropdown">
             <img src="{{ asset('assets/assets/images/avatar.png') }}" alt="Profile Image" class="navbar-profile-img">
-            <span class="navbar-profile-name d-none d-md-inline">Administrator</span>
+            <span class="navbar-profile-name d-none d-md-inline">{{ Auth::user()->name ?? 'Pengguna' }}</span>
             <i class="bi bi-chevron-down navbar-profile-caret"></i>
         </button>
         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-profile" aria-labelledby="profile-dropdown">
             <li class="dropdown-header">Welcome !</li>
-            <li><a class="dropdown-item" href="#"><i class="bi bi-person"></i> My Account</a></li>
-            <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i> Settings</a></li>
-            <li><a class="dropdown-item" href="#"><i class="bi bi-lock"></i> Lock Screen</a></li>
             <li>
-            <hr class="dropdown-divider">
+                <a class="dropdown-item" href="#"><i class="bi bi-person"></i> My Account</a>
             </li>
-            <li><a class="dropdown-item text-danger" href="page-login.html"><i class="bi bi-box-arrow-right"></i>
-                Logout</a></li>
+            <li>
+                <a class="dropdown-item" href="#"><i class="bi bi-gear"></i> Settings</a>
+            </li>
+            <li>
+                <a class="dropdown-item" href="#"><i class="bi bi-lock"></i> Lock Screen</a>
+            </li>
+            <li>
+                <hr class="dropdown-divider">
+            </li>
+            <li>
+                <a class="dropdown-item text-danger" href="3" onclick="event.preventDefault();document.getElementById('logout').submit()"><i class="bi bi-box-arrow-right"></i>
+                Logout</a>
+            </li>
+
+            <form action="{{ route('logout') }}" id="logout" method="post" class="d-none">
+                @csrf
+            </form>
         </ul>
         </div>
     </div>
@@ -283,10 +294,12 @@
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
-            <li class="breadcrumb-item"><a href="{{ url('dashboard') }}" class="text-decoration-none text-muted-green">Home</a></li>
-            @isset($directInfo)
-                <li class="breadcrumb-item active text-main" aria-current="page">{{ request()->is($directInfo) ? '$title' : ''}}</li>
-            @endisset
+
+                @hasSection('breadcrumb')
+                    @yield('breadcrumb')
+                @else
+                    <li class="breadcrumb-item active text-main" aria-current="page">{{ $title ?? '' }}</li>
+                @endif
             </ol>
         </nav>
     </div>

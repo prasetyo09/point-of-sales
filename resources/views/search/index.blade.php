@@ -1,5 +1,9 @@
 @extends('app')
 
+@section('breadcrumb')
+    <li class="breadcrumb-item active text-main" aria-current="page">Search Results</li>
+@endsection
+
 @section('title', 'Search results - ' . $keyword)
 
 @section('content')
@@ -13,10 +17,10 @@
         </div>
         <div>
             @php
-                $totalResults = $results['products']->count() 
-                              + $results['categories']->count() 
-                              + $results['users']->count() 
-                              + $results['roles']->count();
+                $totalResults = $results['products']->count()
+                                + $results['categories']->count()
+                                + $results['users']->count()
+                                + $results['roles']->count();
             @endphp
             <span class="badge bg-success fs-6 px-3 py-2 rounded-pill">
                 {{ $totalResults }} Found
@@ -46,7 +50,7 @@
                     <div class="card-body p-0">
                         <div class="list-group list-group-flush">
                             @forelse ($results['products'] as $product)
-                                <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center px-3 py-3"> 
+                                <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center px-3 py-3">
                                     <div>
                                         <div class="fw-semibold text-dark">{{ $product->name }}</div>
                                         @if(isset($product->price))
