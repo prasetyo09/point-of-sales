@@ -38,6 +38,12 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        // dd(
+        //     $request->all(),
+        //     $request->hasFile('photo'),
+        //     $request->file('photo')
+        // );
+
         $data = [
             'name' => $request->name,
             'category_id' => $request->category_id,

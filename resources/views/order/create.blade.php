@@ -85,6 +85,45 @@
         .card-payment{
             cursor: pointer;
         }
+
+        .custom-input:focus {
+            border-color: #198754 !important;
+            box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.15) !important;
+        }
+
+        .payment-option-card {
+            cursor: pointer;
+            display: block;
+        }
+
+        .payment-option-card .option-content {
+            transition: all 0.2s ease-in-out;
+            background-color: #ffffff;
+        }
+
+        .payment-option-card .option-icon {
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+        }
+
+        .payment-option-card .check-indicator {
+            opacity: 0;
+            transform: scale(0.7);
+            transition: all 0.2s ease-in-out;
+        }
+
+        /* State ketika metode pembayaran terpilih */
+        .payment-option-card .payment-radio:checked + .option-content {
+            border-color: #198754 !important;
+            background-color: rgba(25, 135, 84, 0.04);
+            box-shadow: 0 4px 12px rgba(25, 135, 84, 0.12);
+        }
+
+        .payment-option-card .payment-radio:checked + .option-content .check-indicator {
+            opacity: 1;
+            transform: scale(1);
+        }
     </style>
 </head>
 
@@ -238,81 +277,126 @@
     </div>
 
     <div class="modal fade" id="paymentMethod" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="paymentMethodLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header text-bg-success">
-                    <h1 class="modal-title fs-5" id="paymentMethodLabel">Detail Pembayaran</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="modal-header bg-success bg-gradient text-white px-4 py-3">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-shield-check fs-4"></i>
+                        <h5 class="modal-title fw-bold mb-0" id="paymentMethodLabel">Confirmation & Payment</h5>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">Customer Name</label>
-                        <input type="text" id="customer_name" class="form-control">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">Customer Email</label>
-                        <input type="email" id="customer_email" class="form-control">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">Customer Address</label>
-                        <textarea id="customer_address" class="form-control"></textarea>
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="col-md-6 mb-1">
-                            <strong class="bg-success p-2 text-white rounded" id="total-paid">Harga : Rp.0</strong>
+                <div class="modal-body p-4 bg-light">
+                    
+                    <!-- Ringkasan Tagihan Card -->
+                    <div class="card border-0 shadow-sm rounded-3 mb-4 bg-white">
+                        <div class="card-body d-flex justify-content-between align-items-center p-3">
+                            <div>
+                                <span class="text-muted small text-uppercase fw-semibold d-block">Total Bill</span>
+                                <span class="text-secondary small">Includes all item details</span>
+                            </div>
+                            <span class="badge bg-success-subtle text-success fs-4 fw-bold px-3 py-2 rounded-3" id="total-paid">
+                                Rp 0
+                            </span>
                         </div>
                     </div>
 
-                    <div class="row only-cash d-none align-items-center mt-3 mb-3">
+                    <div class="row g-4">
                         <div class="col-lg-6">
-                            <label for="cash_paid" class="form-label">Pembayaran Cash :</label>
-                            <input type="number" id="cash_paid" step="any" min="0" class="form-control" oninput="calculateChange()">
+                            <div class="card border-0 shadow-sm rounded-3 p-3 bg-white h-100">
+                                <h6 class="fw-bold text-success mb-3 d-flex align-items-center gap-2">
+                                    <i class="bi bi-person-lines-fill"></i> Customer Data
+                                </h6>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label small fw-semibold text-secondary">Full Name</label>
+                                    <input type="text" id="customer_name" class="form-control rounded-3 border-light-subtle shadow-none custom-input" placeholder="Enter Your Name...">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label small fw-semibold text-secondary">Email</label>
+                                    <input type="email" id="customer_email" class="form-control rounded-3 border-light-subtle shadow-none custom-input" placeholder="name@email.com">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label small fw-semibold text-secondary">Mobile/WhatsApp Number</label>
+                                    <input type="tel" id="customer_phone" class="form-control rounded-3 border-light-subtle shadow-none custom-input" placeholder="08123456789">
+                                </div>
+                                <div>
+                                    <label class="form-label small fw-semibold text-secondary">Shipping Address</label>
+                                    <textarea id="customer_address" rows="2" class="form-control rounded-3 border-light-subtle shadow-none custom-input" placeholder="Complete Address..."></textarea>
+                                </div>
+                            </div>
                         </div>
-
                         <div class="col-lg-6">
-                            <strong class="bg-primary p-2 text-white rounded" id="change-paid">
-                                Kembalian : Rp.0
-                            </strong>
+                            <div class="card border-0 shadow-sm rounded-3 p-3 bg-white h-100">
+                                <h6 class="fw-bold text-success mb-3 d-flex align-items-center gap-2">
+                                    <i class="bi bi-wallet2"></i> Payment Method
+                                </h6>
+
+                                <div class="d-flex flex-column gap-3">
+                                    <label class="payment-option-card only-cash">
+                                        <input type="radio" name="payment_method" value="0" class="d-none payment-radio" onchange="toggleCashInput(true)">
+                                        <div class="option-content p-3 rounded-3 border d-flex align-items-center gap-3">
+                                            <div class="option-icon bg-success-subtle text-success rounded-circle d-flex align-items-center justify-content-center">
+                                                <i class="bi bi-cash-stack fs-4"></i>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <label for="cash_paid" class="form-label fw-bold text-dark">Cash Payment :</label>
+                                                <input type="number" id="cash_paid" step="any" min="0" class="form-control mb-3" oninput="calculateChange()" placeholder="example: 20000">
+                                                <strong class="bg-primary p-2 text-white rounded" id="change-paid">
+                                                    Order Change : Rp.0
+                                                </strong>
+                                            </div>
+                                            <i class="bi bi-check-circle-fill check-indicator text-success fs-5"></i>
+                                        </div>
+                                    </label>
+                                    <label class="payment-option-card">
+                                        <input type="radio" name="payment_method" value="1" class="d-none payment-radio" onchange="toggleCashInput(false)">
+                                        <div class="option-content p-3 rounded-3 border d-flex align-items-center gap-3">
+                                            <div class="option-icon bg-success-subtle text-success rounded-circle d-flex align-items-center justify-content-center">
+                                                <i class="bi bi-qr-code-scan fs-4"></i>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <div class="fw-bold text-dark">Online Payment</div>
+                                                <div class="text-muted small">QRIS, E-Wallet, & Virtual Account</div>
+                                            </div>
+                                            <i class="bi bi-check-circle-fill check-indicator text-success fs-5"></i>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="only-cash d-none mt-3 p-3 bg-light rounded-3 border border-success-subtle">
+                                    <label for="cash_paid" class="form-label small fw-semibold text-secondary">Nominal Tunai Diterima</label>
+                                    <div class="input-group mb-2">
+                                        <span class="input-group-text bg-white border-light-subtle text-muted">Rp</span>
+                                        <input type="number" id="cash_paid" step="any" min="0" class="form-control border-light-subtle shadow-none" placeholder="0" oninput="calculateChange()">
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+                                        <span class="small text-secondary">Kembalian:</span>
+                                        <strong class="text-success" id="change-paid">Rp 0</strong>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
 
-                    <h5 class="mb-3 fw-semibold">Pilih Metode Pembayaran</h5>
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label class="w-100 card-payment">
-                                <input type="radio" name="payment_method" value="0" class="d-none payment-option">
-                                <div class="card p-3 shadow-sm border payment-card text-center h-100">
-                                    <h4 class="text-success fw-bold"><i class="bi bi-cash-stack"></i> Cash</h4>
-                                    <p class="text-muted small">Bayar Langsung di Kasir Secara Tunai.</p>
-                                </div>
-                            </label>
-                        </div>
-                        <div class="col-md-6 ">
-                            <label class="w-100 card-payment">
-                                <input type="radio" name="payment_method" value="1" class="d-none payment-option">
-                                <div class="card p-3 shadow-sm border payment-card text-center h-100">
-                                    <h4 class="text-success fw-bold"><i class="bi bi-cash-stack"></i> Online</h4>
-                                    <p class="text-muted small">Pembayaran Online via QRIS / E-Wallet</p>
-                                </div>
-                            </label>
-                        </div>
-                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" onclick="processPayment()" class="btn btn-primary">Pay Now</button>
+                
+                <div class="modal-footer bg-white border-top-0 px-4 py-3 d-flex justify-content-between">
+                    <button type="button" class="btn btn-outline-secondary px-4 rounded-pill" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" onclick="processPayment()" class="btn btn-success px-4 rounded-pill shadow-sm fw-semibold d-flex align-items-center gap-2">
+                        <i class="bi bi-lock-fill"></i> Pay Now
+                    </button>
                 </div>
+
             </div>
         </div>
     </div>
 
-    <!-- Modal Preview Struk -->
     <div class="modal fade" id="receiptModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Struk Pembayaran</h5>
+                    <h5 class="modal-title">Payment Receipt</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="location.reload()"></button>
                 </div>
                 <div class="modal-body p-0">
@@ -364,11 +448,11 @@
             const changeElement = document.getElementById('change-paid');
 
             if (changeMoney < 0) {
-                changeElement.innerText = `Kurang Rp. ${formatRupiah(Math.abs(changeMoney))}`;
+                changeElement.innerText = `Short by Rp. ${formatRupiah(Math.abs(changeMoney))}`;
                 changeElement.classList.add('text-bg-danger');
                 changeElement.classList.remove('bg-primary');
             } else {
-                changeElement.innerText = `Kembalian Rp. ${formatRupiah(changeMoney)}`;
+                changeElement.innerText = `Change Rp. ${formatRupiah(changeMoney)}`;
                 changeElement.classList.add('text-bg-success');
                 changeElement.classList.remove('text-bg-danger');
             }
@@ -587,6 +671,7 @@
             const selectedPayment = document.querySelector('input[name=payment_method]:checked');
             const paymentMethod = selectedPayment ? selectedPayment.value : '0';
             const customerName = document.getElementById('customer_name').value || 'Unknown';
+            const customerPhone = document.getElementById('customer_phone').value || 'Unknown';
             const customerEmail= document.getElementById('customer_email').value || 'Unknown';
             const customerAddress= document.getElementById('customer_address').value || 'Unknown';
 
@@ -635,6 +720,7 @@
                         payment_method: paymentMethod,
                         change: changeMoney,
                         customer_name: customerName,
+                        customer_phone: customerPhone,
                         customer_email: customerEmail,
                         customer_address: customerAddress
                     })

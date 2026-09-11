@@ -87,8 +87,8 @@
     <div class="divider"></div>
 
     <div class="text-center">
-        Terima Kasih Atas Kunjungan Anda<br>
-        Barang yang sudah dibeli tidak dapat ditukar
+        Thank you for your visit!<br>
+        Goods that have been purchased cannot be exchanged!
     </div>
 </body>
 </html>

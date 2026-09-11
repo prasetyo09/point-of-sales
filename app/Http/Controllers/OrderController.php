@@ -130,8 +130,21 @@ class OrderController extends Controller
                         ],
                         "customer_details" => [
                             "first_name" => $request->customer_name ?? 'No-Name',
+                            "phone" => $request->customer_phone ?? 'No-Number',
                             "email" => $request->customer_email ?? 'No-Email',
-                            "address" => $request->customer_address ?? 'No-Address'
+
+                            "shipping_address" => [
+                                "first_name" => $request->customer_name ?? 'No-Name',
+                                "phone" => $request->customer_phone ?? 'No-Number',
+                                "address" => $request->customer_address ?? 'No-Address'
+                            ],
+
+                            "billing_address" => [
+                                "first_name" => $request->customer_name ?? 'No-Name',
+                                "phone" => $request->customer_phone ?? 'No-Number',
+                                "address" => $request->customer_address ?? 'No-Address'
+                            ]
+
                         ],
                         // 'enabled_payments' => ['gopay', 'qris']
                     ];
