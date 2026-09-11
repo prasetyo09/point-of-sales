@@ -64,6 +64,12 @@
                 <span>Product</span>
                 </a>
             </li>
+            <li class="sidebar-menu-item">
+                <a href="{{ url('order') }}" class="sidebar-menu-link {{ request()->is('order') ? 'active' : '' }}" id="menu-overview" title="Overview">
+                <i class="bi bi-bag"></i>
+                <span>Order Transaction</span>
+                </a>
+            </li>
         </ul>
     </div>
 
