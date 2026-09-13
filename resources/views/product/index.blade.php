@@ -29,7 +29,9 @@
                 <th class="text-center">Name</th>
                 <th class="text-center">Price</th>
                 <th class="text-center">Stock</th>
+                @if (Auth::user()->role_id == 1)
                 <th class="text-center">Actions</th>
+                @endif
             </tr>
         </thead>
         <tbody>
@@ -47,6 +49,7 @@
                 </td>
                 <td class="text-center fw-semibold">Rp.{{ number_format($v->price) }}</td>
                 <td class="text-center fw-semibold {{ $v->stock == 0 ? 'text-danger' : '' }}">{{ $v->stock }}</td>
+                @if (Auth::user()->role_id == 1)
                 <td class="text-center">
                     <a href="{{ route('product.edit', $v->id) }}" class="btn btn-outline-success">Edit</a>
                     <a href="{{ route('product.show', $v->id) }}" class="btn btn-outline-primary">Detail</a>
@@ -56,6 +59,7 @@
                         <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Are you sure you want to delete this data?')">Delete</button>
                     </form>
                 </td>
+                @endif
             </tr>
             @endforeach
         </tbody>

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Central Jakarta PPKD Coffee Shop</title>
+    <title>Central Jakarta PPKD Restaurant</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
@@ -28,6 +28,7 @@
             border-radius: 15px;
             transition: 0.2s;
             overflow: hidden;
+            
         }
 
         .product-card:hover {
@@ -131,14 +132,14 @@
     <div class="container-fluid">
         <div class="card">
             <main class="col-lg-12 p-5">
-                <h3 class="fw-bold mb-1">POS - Laundry</h3>
+                <h3 class="fw-bold mb-1">POS - Restaurant</h3>
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <p class="text-muted">PT. Angin Ribut</p>
-                    <button class="btn btn-dark">Empty Cart</button>
+                    <p class="text-muted">Pusat Pelatihan Kerja Daerah Jakarta Pusat</p>
+                    <button class="btn btn-dark" onclick="clearCart()">Empty Cart</button>
                 </div>
                 <div class="mb-3">
-                    <a href="{{ url('order') }}" class="btn btn-primary"><i class="bi bi-arrow-left"></i>Back to
-                        CMS</a>
+                    <a href="{{ url('order') }}" class="btn btn-success"><i class="bi bi-arrow-left"></i>Back to
+                        Application</a>
                 </div>
 
                 <div class="row g-5 mb-2">
@@ -148,8 +149,8 @@
                                 <div class="d-flex align-items-center gap-2 ">
                                     <i class="bi bi-cart4" style="font-size: 2rem"></i>
                                     <div>
-                                        <small class="text-muted">Today Transaction</small>
-                                        <h4>10.000.000</h4>
+                                        <small class="text-muted">Total Transaction</small>
+                                        <h4 class="mb-0 fw-bold" id="todayTransaction">{{ number_format($totalOrders) }} {{ $totalOrders === 1 ? 'Transaction' : 'Transactions' }}</h4>
                                     </div>
                                 </div>
                             </div>
@@ -161,8 +162,8 @@
                                 <div class="d-flex align-items-center gap-2 ">
                                     <i class="bi bi-cart4" style="font-size: 2rem"></i>
                                     <div>
-                                        <small class="text-muted">Product Sold</small>
-                                        <h4>10.000.000</h4>
+                                        <small class="text-muted">Total Income</small>
+                                        <h4 class="mb-0 fw-bold" id="todayIncome">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</h4>
                                     </div>
                                 </div>
                             </div>
@@ -174,8 +175,8 @@
                                 <div class="d-flex align-items-center gap-2 ">
                                     <i class="bi bi-cart4" style="font-size: 2rem"></i>
                                     <div>
-                                        <small class="text-muted">Today Transaction</small>
-                                        <h4>10.000.000</h4>
+                                        <small class="text-muted">Products Sold</small>
+                                        <h4 class="mb-0 fw-bold" id="todayProduct">{{ $totalProducts }} {{ $totalProducts === 1 ? 'Product' : 'Products' }}</h4>
                                     </div>
                                 </div>
                             </div>
@@ -575,6 +576,12 @@
             calculateCart();
         }
 
+        function clearCart(){
+            cart = [];
+            displayCart();
+        }
+            
+
         function removeItem(productId) {
             cart = cart.filter(function (item) {
                 return Number(item.id) !== Number(productId);
@@ -734,8 +741,16 @@
                 if (result.payment_method === "midtrans") {
                     //MIDTRANS
                     window.snap.pay(result.snap_token, {
-                        onSuccess: function (snapResult) {
+                        onSuccess: async function (snapResult) {
                             /* You may add your own implementation here */
+
+                            await fetch(`/orders/${result.order_id}/pay-success`, {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+                                }
+                            });
 
                             openReceipt(result.order_id);
 
@@ -766,6 +781,7 @@
                         }
                     });
                 } else {
+                    await loadDashboardData();
                     alert("Transaksi Cash Berhasil");
                     openReceipt(result.order_id);
 
@@ -783,6 +799,33 @@
             }
         }
         displayCart();
+        loadDashboardData();
+
+        async function loadDashboardData(){
+            try {
+                const response = await fetch("{{ route('orders.data') }}");
+
+                if (!response.ok) {
+                    throw new Error('Gagal mengambil data dashboard');
+                }
+
+                const data = await response.json();
+
+                document.getElementById('todayTransaction').textContent =
+                    data.today_transaction;
+
+                document.getElementById('todayIncome').textContent =
+                    'Rp ' + Number(data.today_income).toLocaleString('id-ID');
+
+                document.getElementById('todayProduct').textContent =
+                    data.today_product;
+
+            } catch (error) {
+                console.error('Dashboard error:', error);
+            }
+        }
+
+        
     </script>
 </body>
 

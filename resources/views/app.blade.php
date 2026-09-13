@@ -2,15 +2,44 @@
 <html lang="en">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{{ $title ?? '' }} / Laundry POS </title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title class="no-print">{{ $title ?? 'Dashboard' }} - POS Laundry </title>
 
-<!-- SEO Optimization -->
-<meta name="description" content="Blank Page - Spark Admin Premium Bootstrap 5 Admin Dashboard Template">
-<meta name="author" content="Spark Admin Team">
+    <!-- SEO Optimization -->
+    <meta name="description" content="Blank Page - Spark Admin Premium Bootstrap 5 Admin Dashboard Template">
+    <meta name="author" content="Spark Admin Team">
 
-@include('inc.css')
+    @include('inc.css')
+
+    <style>
+        .sidebar {
+            width: 250px;
+            background: #2c3e50;
+            color: white;
+            height: 100vh;
+            padding: 20px;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+        }
+        .sidebar .submenu {
+            display: none;
+            padding-left: 15px;
+            background: #34495e;
+        }
+        /* Menampilkan submenu saat parent di-hover (alternatif tanpa JS) */
+        .sidebar li.dropdown:hover .submenu {
+            display: block;
+        }
+    </style>
 
 
 </head>
@@ -21,9 +50,9 @@
         START: Sidebar Component
         Highly polished, dark-green navigation
         ========================================== -->
-<div class="sidebar-wrapper" id="sidebar">
+<div class="sidebar-wrapper no-print" id="sidebar">
     <!-- Brand Logo / Identity -->
-    <a href="index.html" class="sidebar-brand">
+    <a href="3" class="sidebar-brand">
     <i class="bi bi-asterisk"></i>
     <span>Spark Admin</span>
     </a>
@@ -64,10 +93,35 @@
                 <span>Product</span>
                 </a>
             </li>
+
             <li class="sidebar-menu-item">
                 <a href="{{ url('order') }}" class="sidebar-menu-link {{ request()->is('order') ? 'active' : '' }}" id="menu-overview" title="Overview">
                 <i class="bi bi-bag"></i>
                 <span>Order Transaction</span>
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a href="{{ url('reports') }}" class="sidebar-menu-link {{ request()->is('reports') ? 'active' : '' }}" id="menu-overview" title="Overview">
+                <i class="bi bi-bag"></i>
+                <span>Reports</span>
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a href="{{ url('/instruction/admin') }}" class="sidebar-menu-link {{ request()->is('/instruction/admin') ? 'active' : '' }}" id="menu-overview" title="Overview">
+                <i class="bi bi-bag"></i>
+                <span>Instruction (Administrator)</span>
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a href="{{ url('/instruction/cashier') }}" class="sidebar-menu-link {{ request()->is('/instruction/cashier') ? 'active' : '' }}" id="menu-overview" title="Overview">
+                <i class="bi bi-bag"></i>
+                <span>Instruction (Cashier)</span>
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a href="{{ url('/instruction/leader') }}" class="sidebar-menu-link {{ request()->is('/instruction/leader') ? 'active' : '' }}" id="menu-overview" title="Overview">
+                <i class="bi bi-bag"></i>
+                <span>Instruction (leader)</span>
                 </a>
             </li>
         </ul>
@@ -153,18 +207,22 @@
             <i class="bi bi-chevron-bar-left"></i>
             </button> --}}
             <!-- Mobile sidebar toggle -->
-            <a href="{{ url()->previous() }}" class="btn-desktop-toggle d-xl-flex align-items-center justify-content-center me-3" id="desktop-sidebar-toggle" aria-label="Minimize Sidebar"><i class="bi bi-chevron-bar-left"></i></a>
+            <a href="{{ url()->previous() }}" class="btn-desktop-toggle d-xl-flex align-items-center justify-content-center me-3 no-print" id="desktop-sidebar-toggle" aria-label="Minimize Sidebar"><i class="bi bi-chevron-bar-left"></i></a>
 
-            <button class="sidebar-toggle-btn me-2" id="sidebar-toggle" aria-label="Toggle Navigation">
+            <button class="sidebar-toggle-btn me-2 no-print" id="sidebar-toggle" aria-label="Toggle Navigation">
             <i class="bi bi-list"></i>
             </button>
 
             <!-- Quick Actions Dropdown -->
             <div class="dropdown ms-2">
                 @isset($btnUrl)
-                    <a href="{{ $btnUrl }}" class="btn btn-success">
+                    <a href="{{ $btnUrl }}" class="btn btn-success no-print">
                         {{ $btnTitle ?? '' }}
                     </a>
+                @endisset
+
+                @isset($btnClick)
+                    <button onclick={{ $btnClick }} class="btn btn-dark no-print"><i class="bi bi-printer"></i> Print Report</button>
                 @endisset
             {{-- <button class="btn-quick-action dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"
                 id="quick-actions-dropdown">
@@ -185,7 +243,7 @@
         </div>
 
     <!-- Mid navbar: search pill -->
-    <form action="{{ route('search') }}" method="GET" class="navbar-search-wrapper">
+    <form action="{{ route('search') }}" method="GET" class="navbar-search-wrapper no-print">
         <input
             type="text"
             name="keyword"
@@ -201,92 +259,92 @@
     </form>
 
     <!-- Right actions -->
-    <div class="navbar-actions">
+    <div class="navbar-actions no-print">
         <!-- Fullscreen Toggle -->
         <button class="navbar-action-btn me-1" aria-label="Toggle Fullscreen" id="btn-fullscreen">
-        <i class="bi bi-arrows-fullscreen"></i>
+            <i class="bi bi-arrows-fullscreen"></i>
         </button>
-        <div class="dropdown">
-        <button class="navbar-action-btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
-            aria-expanded="false" id="btn-notifications" data-bs-auto-close="outside">
-            <i class="bi bi-bell"></i>
-            <span class="navbar-action-badge"></span>
-        </button>
-        <div class="dropdown-menu dropdown-menu-end dropdown-menu-notification p-0"
-            aria-labelledby="btn-notifications">
-            <div class="notification-header">
-            <h6 class="notification-title">Notifications</h6>
-            <button class="btn-clear-all" type="button">Mark all read</button>
+        <div class="dropdown no-print">
+            <button class="navbar-action-btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false" id="btn-notifications" data-bs-auto-close="outside">
+                <i class="bi bi-bell"></i>
+                <span class="navbar-action-badge"></span>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end dropdown-menu-notification p-0"
+                aria-labelledby="btn-notifications">
+                <div class="notification-header">
+                <h6 class="notification-title">Notifications</h6>
+                <button class="btn-clear-all" type="button">Mark all read</button>
+                </div>
+                <div class="notification-list">
+                <!-- Sale Notification -->
+                <a href="#" class="notification-item">
+                    <div class="notification-icon bg-success text-white">
+                    <i class="bi bi-wallet2"></i>
+                    </div>
+                    <div class="notification-content">
+                    <p class="notification-text">New sale received: <strong>$150.00</strong></p>
+                    <span class="notification-time">2 mins ago</span>
+                    </div>
+                    <span class="notification-unread-dot"></span>
+                </a>
+                <!-- User Registration Notification -->
+                <a href="#" class="notification-item">
+                    <div class="notification-icon bg-primary text-white">
+                    <i class="bi bi-person-plus-fill"></i>
+                    </div>
+                    <div class="notification-content">
+                    <p class="notification-text">New user registered: <strong>John Doe</strong></p>
+                    <span class="notification-time">1 hour ago</span>
+                    </div>
+                    <span class="notification-unread-dot"></span>
+                </a>
+                <!-- Low Stock Notification -->
+                <a href="#" class="notification-item">
+                    <div class="notification-icon bg-warning text-dark">
+                    <i class="bi bi-box-seam-fill"></i>
+                    </div>
+                    <div class="notification-content">
+                    <p class="notification-text">Stock running low: <strong>Hoodie</strong></p>
+                    <span class="notification-time">3 hours ago</span>
+                    </div>
+                </a>
+                </div>
+                <a href="#" class="notification-footer">View All Notifications</a>
             </div>
-            <div class="notification-list">
-            <!-- Sale Notification -->
-            <a href="#" class="notification-item">
-                <div class="notification-icon bg-success text-white">
-                <i class="bi bi-wallet2"></i>
-                </div>
-                <div class="notification-content">
-                <p class="notification-text">New sale received: <strong>$150.00</strong></p>
-                <span class="notification-time">2 mins ago</span>
-                </div>
-                <span class="notification-unread-dot"></span>
-            </a>
-            <!-- User Registration Notification -->
-            <a href="#" class="notification-item">
-                <div class="notification-icon bg-primary text-white">
-                <i class="bi bi-person-plus-fill"></i>
-                </div>
-                <div class="notification-content">
-                <p class="notification-text">New user registered: <strong>John Doe</strong></p>
-                <span class="notification-time">1 hour ago</span>
-                </div>
-                <span class="notification-unread-dot"></span>
-            </a>
-            <!-- Low Stock Notification -->
-            <a href="#" class="notification-item">
-                <div class="notification-icon bg-warning text-dark">
-                <i class="bi bi-box-seam-fill"></i>
-                </div>
-                <div class="notification-content">
-                <p class="notification-text">Stock running low: <strong>Hoodie</strong></p>
-                <span class="notification-time">3 hours ago</span>
-                </div>
-            </a>
-            </div>
-            <a href="#" class="notification-footer">View All Notifications</a>
-        </div>
         </div>
 
         <!-- Profile Dropdown -->
         <div class="dropdown ms-2">
-        <button class="navbar-profile-btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
-            aria-expanded="false" id="profile-dropdown">
-            <img src="{{ asset('assets/assets/images/avatar.png') }}" alt="Profile Image" class="navbar-profile-img">
-            <span class="navbar-profile-name d-none d-md-inline">{{ Auth::user()->name ?? 'Pengguna' }}</span>
-            <i class="bi bi-chevron-down navbar-profile-caret"></i>
-        </button>
-        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-profile" aria-labelledby="profile-dropdown">
-            <li class="dropdown-header">Welcome !</li>
-            <li>
-                <a class="dropdown-item" href="#"><i class="bi bi-person"></i> My Account</a>
-            </li>
-            <li>
-                <a class="dropdown-item" href="#"><i class="bi bi-gear"></i> Settings</a>
-            </li>
-            <li>
-                <a class="dropdown-item" href="#"><i class="bi bi-lock"></i> Lock Screen</a>
-            </li>
-            <li>
-                <hr class="dropdown-divider">
-            </li>
-            <li>
-                <a class="dropdown-item text-danger" href="3" onclick="event.preventDefault();document.getElementById('logout').submit()"><i class="bi bi-box-arrow-right"></i>
-                Logout</a>
-            </li>
+            <button class="navbar-profile-btn dropdown-toggle no-print" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false" id="profile-dropdown">
+                <img src="{{ asset('assets/assets/images/avatar.png') }}" alt="Profile Image" class="navbar-profile-img">
+                <span class="navbar-profile-name d-none d-md-inline">{{ Auth::user()->name ?? 'Pengguna' }}</span>
+                <i class="bi bi-chevron-down navbar-profile-caret"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-profile" aria-labelledby="profile-dropdown">
+                <li class="dropdown-header">Welcome !</li>
+                <li>
+                    <a class="dropdown-item" href="#"><i class="bi bi-person"></i> My Account</a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="#"><i class="bi bi-gear"></i> Settings</a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="#"><i class="bi bi-lock"></i> Lock Screen</a>
+                </li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li>
+                    <a class="dropdown-item text-danger" href="3" onclick="event.preventDefault();document.getElementById('logout').submit()"><i class="bi bi-box-arrow-right"></i>
+                    Logout</a>
+                </li>
 
-            <form action="{{ route('logout') }}" id="logout" method="post" class="d-none">
-                @csrf
-            </form>
-        </ul>
+                <form action="{{ route('logout') }}" id="logout" method="post" class="d-none">
+                    @csrf
+                </form>
+            </ul>
         </div>
     </div>
     </header>
@@ -322,14 +380,14 @@
     <footer class="footer-custom">
         <div class="footer-left">
             <span class="footer-logo">
-            <i class="bi bi-asterisk"></i> Spark Admin
+            <i class="bi bi-asterisk"></i> PrasetyoOFC
             </span>
             <span class="footer-separator">|</span>
             <span class="footer-copy">&copy; 2026 Made with <i class="bi bi-heart-fill text-danger footer-heart"></i> by<a
-                href="https://sparkadminpro.gumroad.com/" target="_blank">Spark Admin</a>• Distributed by <a
-                href="https://www.themewagon.com/" target="_blank">ThemeWagon</a> </span>
+                href="https://sparkadminpro.gumroad.com/" target="_blank">Prasetyo Ari Nugroho</a>• Distributed by <a
+                href="https://ppkdjakpus.com/" target="_blank">PPKD JAKPUS</a> </span>
         </div>
-        <div class="footer-right">
+        <div class="footer-right no-print">
             <ul class="footer-links">
             <li><a href="#" class="footer-link">Overview</a></li>
             <li><a href="#" class="footer-link">Statistics</a></li>

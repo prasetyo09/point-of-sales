@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Midtrans\Config;
 use Midtrans\Snap;
+use Carbon\Carbon;
 
 class OrderController extends Controller
 {
@@ -20,22 +21,58 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $btnTitle = "Add New Product";
-        $btnUrl = route('order.create');
         $subtitle = "Point of Sales";
         $title = "Order Transaction";
-        return view('order.index', compact('title', 'btnTitle', 'btnUrl', 'subtitle'));
+        return view('order.index', compact('title', 'subtitle'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
+        $startDate = $request->input('start_date', Carbon::now()->subDays(30)->toDateString());
+        $endDate   = $request->input('end_date', Carbon::now()->toDateString());
+        $paymentMethod = $request->input('payment_method'); // null, '0', atau '1'
+        $subtitle = Carbon::parse($startDate)->format('d M Y') . " " . "-" . " " . Carbon::parse($endDate)->format('d M Y');
+
+        $query = Order::with(['user', 'items.product'])
+            ->whereDate('created_at', '>=', $startDate)
+            ->whereDate('created_at', '<=', $endDate)
+            ->where('payment_status', 1); // Hanya transaksi yang sudah dibayar/lunas
+
+        if ($paymentMethod !== null && $paymentMethod !== '') {
+            $query->where('payment_method', $paymentMethod);
+        }
+
+        $orderDetails = OrderDetail::with(['product']) ;
+        $orders = $query->latest()->get();
+
+        // Ringkasan metrik
+        $totalRevenue     = $orders->sum('total_price');
+        $totalOrders      = $orders->count();
+        $totalProducts    = $orderDetails->sum('qty');
+        $totalCash        = $orders->where('payment_method', 0)->sum('total_price');
+        $totalMidtrans    = $orders->where('payment_method', 1)->sum('total_price');
+
         $categories = Category::get();
         $products = Product::with('category')->orderBy('id')->get();
         $title = "Create New Order";
-        return view('order.create', compact('title', 'categories', 'products'));
+
+        return view('order.create', compact(
+            'orders',
+            'startDate',
+            'endDate',
+            'paymentMethod',
+            'totalRevenue',
+            'totalOrders',
+            'totalProducts',
+            'totalCash',
+            'totalMidtrans',
+            'title',
+            'categories',
+            'products'
+        ));
     }
 
     /**
@@ -79,7 +116,7 @@ class OrderController extends Controller
                 // $paymentMethod = $request->payment_method ?? 0 ;
 
                 $rawPaymentMethod = $request->payment_method ?? 'cash';
-                $paymentMethod = ($rawPaymentMethod === 'midtrans' || $rawPaymentMethod === '1') ? 1 : 0;
+                $paymentMethod = ($rawPaymentMethod === '1') ? 1 : 0;
 
                 // 2. Status: Cash = 1 (paid), Midtrans = 0 (pending)
                 $paymentStatus = ($paymentMethod === 0) ? 1 : 0;
@@ -204,4 +241,37 @@ class OrderController extends Controller
     {
         //
     }
+
+    public function updatePaymentStatus(Request $request, $id)
+    {
+        $order = Order::findOrFail($id);
+        $order->update([
+            'payment_status' => 1 // Update jadi paid
+        ]);
+
+        return response()->json(['success' => true]);
+    }
+
+    public function data(){
+
+        //Order
+        $todayTransaction = Order::whereDate('created_at', today())
+            ->count();
+
+        //Income
+        $todayIncome = Order::whereDate('created_at', today())
+            ->sum('total_price');
+
+        //Product
+        $todayProduct = OrderDetails::whereHas('order', function ($query) {
+            $query->whereDate('created_at', today());
+        })->sum('qty');
+
+        return response()->json([
+            'today_transaction' => $todayTransaction,
+            'today_income' => $todayIncome,
+            'today_product' => $todayProduct,
+        ]);
+    }
+    
 }
