@@ -55,9 +55,10 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
+        $categories = Category::findOrFail($id);
         $title = "Edit Category";
         $subtitle = "Edit the category in accordance with the rules.";
-        return view('category.create', compact('title', 'subtitle'));
+        return view('category.edit', compact('title', 'subtitle', 'categories'));
     }
 
     /**

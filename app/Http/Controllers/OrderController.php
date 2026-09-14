@@ -263,7 +263,7 @@ class OrderController extends Controller
             ->sum('total_price');
 
         //Product
-        $todayProduct = OrderDetails::whereHas('order', function ($query) {
+        $todayProduct = OrderDetail::whereHas('order', function ($query) {
             $query->whereDate('created_at', today());
         })->sum('qty');
 
@@ -273,5 +273,5 @@ class OrderController extends Controller
             'today_product' => $todayProduct,
         ]);
     }
-    
+
 }

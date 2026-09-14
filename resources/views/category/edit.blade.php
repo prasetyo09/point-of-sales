@@ -16,7 +16,7 @@
                 @method('PUT')
                 <div class="mb-3">
                     <label for="" class="form-label fw-bold">Nama</label>
-                    <input type="text" name="name" id="name" class="form-control" value="{{$categories->name }}">
+                    <input type="text" name="name" id="name" class="form-control" value="{{ $categories->name }}">
                 </div>
                 <button type="submit" name="save" class="btn btn-success">Save Changes</button>
                 <button type="reset" class="btn btn-outline-success">Reset</button>

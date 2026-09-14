@@ -1,6 +1,7 @@
 @extends('app')
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ url('dashboard') }}" class="text-decoration-none text-muted-green no-print">Dashboard</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('reports') }}" class="text-decoration-none text-muted no print">Reports</a></li>
 @endsection
 
 @section('content')

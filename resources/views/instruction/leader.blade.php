@@ -1,7 +1,7 @@
 @extends('app')
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ url('dashboard') }}" class="text-decoration-none text-muted-green">Dashboard</a></li>
-    <li class="breadcrumb-item"><a href="{{ url('instruction') }}" class="text-decoration-none text-muted">Instruction</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/instruction/leader') }}" class="text-decoration-none text-muted">Instruction</a></li>
 @endsection
 @section('content')
 <head>
@@ -120,10 +120,9 @@
 
         <div class="header">
             <div class="icon">📊</div>
-
             <div>
                 <h1>Leader</h1>
-                <p>Tata cara penggunaan aplikasi POS</p>
+                <p>Procedures for using the POS application</p>
             </div>
         </div>
 
@@ -131,32 +130,32 @@
 
             <div class="step">
                 <div class="number">1</div>
-                <p>Login ke dalam aplikasi POS menggunakan akun <strong>Leader</strong>.</p>
+                <p>Log in to the POS application using an <strong>Leader</strong> account.</p>
             </div>
 
             <div class="step">
                 <div class="number">2</div>
-                <p>Pilih menu <strong>Master Produk</strong> untuk melihat stok barang.</p>
+                <p>Select the <strong>Products</strong> menu to view the stock.</p>
             </div>
 
             <div class="step">
                 <div class="number">3</div>
-                <p>Periksa jumlah stok produk yang tersedia.</p>
+                <p>Check the available stock quantity of the product.</p>
             </div>
 
             <div class="step">
                 <div class="number">4</div>
-                <p>Pilih menu <strong>Laporan Penjualan</strong> untuk melihat laporan transaksi penjualan.</p>
+                <p>Select the Sales <strong>Reports</strong> menu to view the sales transaction report.</p>
             </div>
 
             <div class="step">
                 <div class="number">5</div>
-                <p>Pilih periode laporan yang ingin dilihat.</p>
+                <p>Select the report period you wish to view.</p>
             </div>
 
             <div class="step">
                 <div class="number">6</div>
-                <p>Periksa informasi transaksi dan hasil penjualan pada laporan.</p>
+                <p>Check the transaction information and sales results in the report.</p>
             </div>
 
         </div>

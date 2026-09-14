@@ -65,7 +65,11 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $categories = Category::get();
+        $products = Product::find($id);
+        $title = "Detail Product";
+        $subtitle = "information regarding product details";
+        return view('product.detail', compact('title', 'subtitle', 'categories', 'products'));
     }
 
     /**

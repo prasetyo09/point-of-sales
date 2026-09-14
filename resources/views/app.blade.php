@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title class="no-print">{{ $title ?? 'Dashboard' }} - POS Laundry </title>
+    <title class="no-print">{{ $title ?? 'Dashboard' }} - POS Restaurant </title>
 
     <!-- SEO Optimization -->
     <meta name="description" content="Blank Page - Spark Admin Premium Bootstrap 5 Admin Dashboard Template">
@@ -54,7 +54,7 @@
     <!-- Brand Logo / Identity -->
     <a href="3" class="sidebar-brand">
     <i class="bi bi-asterisk"></i>
-    <span>Spark Admin</span>
+    <span>Restaurant - PPKD Jakpus</span>
     </a>
 
     <!-- Navigation Menu -->
@@ -69,61 +69,58 @@
                 <span>Dashboard</span>
                 </a>
             </li>
-            <li class="sidebar-menu-item">
-                <a href="{{ url('user') }}" class="sidebar-menu-link {{ request()->is('user') ? 'active' : '' }}" id="menu-overview" title="Overview">
-                <i class="bi bi-person"></i>
-                <span>User</span>
-                </a>
-            </li>
-            <li class="sidebar-menu-item">
-                <a href="{{ url('role') }}" class="sidebar-menu-link {{ request()->is('role') ? 'active' : '' }}" id="menu-overview" title="Overview">
-                <i class="bi bi-file-person-fill"></i>
-                <span>Role</span>
-                </a>
-            </li>
-            <li class="sidebar-menu-item">
-                <a href="{{ url('category') }}" class="sidebar-menu-link {{ request()->is('category') ? 'active' : '' }}" id="menu-overview" title="Overview">
-                <i class="bi bi-tag"></i>
-                <span>Category</span>
-                </a>
-            </li>
-            <li class="sidebar-menu-item">
-                <a href="{{ url('product') }}" class="sidebar-menu-link {{ request()->is('product') ? 'active' : '' }}" id="menu-overview" title="Overview">
-                <i class="bi bi-bag"></i>
-                <span>Product</span>
-                </a>
-            </li>
-
-            <li class="sidebar-menu-item">
-                <a href="{{ url('order') }}" class="sidebar-menu-link {{ request()->is('order') ? 'active' : '' }}" id="menu-overview" title="Overview">
-                <i class="bi bi-bag"></i>
-                <span>Order Transaction</span>
-                </a>
-            </li>
-            <li class="sidebar-menu-item">
-                <a href="{{ url('reports') }}" class="sidebar-menu-link {{ request()->is('reports') ? 'active' : '' }}" id="menu-overview" title="Overview">
-                <i class="bi bi-bag"></i>
-                <span>Reports</span>
-                </a>
-            </li>
-            <li class="sidebar-menu-item">
-                <a href="{{ url('/instruction/admin') }}" class="sidebar-menu-link {{ request()->is('/instruction/admin') ? 'active' : '' }}" id="menu-overview" title="Overview">
-                <i class="bi bi-bag"></i>
-                <span>Instruction (Administrator)</span>
-                </a>
-            </li>
-            <li class="sidebar-menu-item">
-                <a href="{{ url('/instruction/cashier') }}" class="sidebar-menu-link {{ request()->is('/instruction/cashier') ? 'active' : '' }}" id="menu-overview" title="Overview">
-                <i class="bi bi-bag"></i>
-                <span>Instruction (Cashier)</span>
-                </a>
-            </li>
-            <li class="sidebar-menu-item">
-                <a href="{{ url('/instruction/leader') }}" class="sidebar-menu-link {{ request()->is('/instruction/leader') ? 'active' : '' }}" id="menu-overview" title="Overview">
-                <i class="bi bi-bag"></i>
-                <span>Instruction (leader)</span>
-                </a>
-            </li>
+            @if (Auth::user()->role_id == 1)
+                <li class="sidebar-menu-item">
+                    <a href="{{ url('user') }}" class="sidebar-menu-link {{ request()->is('user') ? 'active' : '' }}" id="menu-overview" title="Overview">
+                    <i class="bi bi-person"></i>
+                    <span>User</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="{{ url('role') }}" class="sidebar-menu-link {{ request()->is('role') ? 'active' : '' }}" id="menu-overview" title="Overview">
+                    <i class="bi bi-file-person-fill"></i>
+                    <span>Role</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="{{ url('category') }}" class="sidebar-menu-link {{ request()->is('category') ? 'active' : '' }}" id="menu-overview" title="Overview">
+                    <i class="bi bi-tag"></i>
+                    <span>Category</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="{{ url('product') }}" class="sidebar-menu-link {{ request()->is('product') ? 'active' : '' }}" id="menu-overview" title="Overview">
+                    <i class="bi bi-bag"></i>
+                    <span>Product</span>
+                    </a>
+                </li>
+            @elseif (Auth::user()->role_id == 2)
+                <li class="sidebar-menu-item">
+                    <a href="{{ url('product') }}" class="sidebar-menu-link {{ request()->is('product') ? 'active' : '' }}" id="menu-overview" title="Overview">
+                    <i class="bi bi-bag"></i>
+                    <span>Product</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="{{ url('order') }}" class="sidebar-menu-link {{ request()->is('order') ? 'active' : '' }}" id="menu-overview" title="Overview">
+                    <i class="bi bi-cart"></i>
+                    <span>Order Transaction</span>
+                    </a>
+                </li>
+            @else
+                <li class="sidebar-menu-item">
+                    <a href="{{ url('product') }}" class="sidebar-menu-link {{ request()->is('product') ? 'active' : '' }}" id="menu-overview" title="Overview">
+                    <i class="bi bi-bag"></i>
+                    <span>Product</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="{{ url('reports') }}" class="sidebar-menu-link {{ request()->is('reports') ? 'active' : '' }}" id="menu-overview" title="Overview">
+                    <i class="bi bi-receipt"></i>
+                    <span>Reports</span>
+                    </a>
+                </li>
+            @endif
         </ul>
     </div>
 
@@ -202,12 +199,12 @@
     <header class="navbar-custom">
         <div class="navbar-left">
             <!-- Desktop sidebar toggle (visible on large screens only) -->
-            {{-- <button class="btn-desktop-toggle d-none d-xl-flex align-items-center justify-content-center me-3"
+            <button class="btn-desktop-toggle d-none d-xl-flex align-items-center justify-content-center me-3"
             id="desktop-sidebar-toggle" aria-label="Minimize Sidebar">
             <i class="bi bi-chevron-bar-left"></i>
-            </button> --}}
+            </button>
             <!-- Mobile sidebar toggle -->
-            <a href="{{ url()->previous() }}" class="btn-desktop-toggle d-xl-flex align-items-center justify-content-center me-3 no-print" id="desktop-sidebar-toggle" aria-label="Minimize Sidebar"><i class="bi bi-chevron-bar-left"></i></a>
+            {{-- <a href="" class="btn-desktop-toggle d-xl-flex align-items-center justify-content-center me-3 no-print" id="desktop-sidebar-toggle" aria-label="Minimize Sidebar"><i class="bi bi-chevron-bar-left"></i></a> --}}
 
             <button class="sidebar-toggle-btn me-2 no-print" id="sidebar-toggle" aria-label="Toggle Navigation">
             <i class="bi bi-list"></i>
@@ -215,11 +212,14 @@
 
             <!-- Quick Actions Dropdown -->
             <div class="dropdown ms-2">
-                @isset($btnUrl)
-                    <a href="{{ $btnUrl }}" class="btn btn-success no-print">
-                        {{ $btnTitle ?? '' }}
-                    </a>
-                @endisset
+                @if (Auth::user()->role_id == 1)
+                    @isset($btnUrl)
+                        <a href="{{ $btnUrl }}" class="btn btn-success no-print">
+                            {{ $btnTitle ?? '' }}
+                        </a>
+                    @endisset
+                @endif
+
 
                 @isset($btnClick)
                     <button onclick={{ $btnClick }} class="btn btn-dark no-print"><i class="bi bi-printer"></i> Print Report</button>
@@ -265,11 +265,11 @@
             <i class="bi bi-arrows-fullscreen"></i>
         </button>
         <div class="dropdown no-print">
-            <button class="navbar-action-btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+            {{-- <button class="navbar-action-btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
                 aria-expanded="false" id="btn-notifications" data-bs-auto-close="outside">
                 <i class="bi bi-bell"></i>
                 <span class="navbar-action-badge"></span>
-            </button>
+            </button> --}}
             <div class="dropdown-menu dropdown-menu-end dropdown-menu-notification p-0"
                 aria-labelledby="btn-notifications">
                 <div class="notification-header">
@@ -324,15 +324,15 @@
             </button>
             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-profile" aria-labelledby="profile-dropdown">
                 <li class="dropdown-header">Welcome !</li>
-                <li>
+                {{-- <li>
                     <a class="dropdown-item" href="#"><i class="bi bi-person"></i> My Account</a>
-                </li>
+                </li> --}}
                 <li>
                     <a class="dropdown-item" href="#"><i class="bi bi-gear"></i> Settings</a>
                 </li>
-                <li>
+                {{-- <li>
                     <a class="dropdown-item" href="#"><i class="bi bi-lock"></i> Lock Screen</a>
-                </li>
+                </li> --}}
                 <li>
                     <hr class="dropdown-divider">
                 </li>
@@ -380,7 +380,7 @@
     <footer class="footer-custom">
         <div class="footer-left">
             <span class="footer-logo">
-            <i class="bi bi-asterisk"></i> PrasetyoOFC
+            <i class="bi bi-asterisk"></i> Restaurant
             </span>
             <span class="footer-separator">|</span>
             <span class="footer-copy">&copy; 2026 Made with <i class="bi bi-heart-fill text-danger footer-heart"></i> by<a
@@ -389,10 +389,25 @@
         </div>
         <div class="footer-right no-print">
             <ul class="footer-links">
-            <li><a href="#" class="footer-link">Overview</a></li>
-            <li><a href="#" class="footer-link">Statistics</a></li>
-            <li><a href="#" class="footer-link">Help & Documentation</a></li>
-            <li><a href="#" class="footer-link">Status <span class="status-dot"></span></a></li>
+            {{-- <li><a href="#" class="footer-link">Overview</a></li> --}}
+            {{-- <li><a href="#" class="footer-link">Statistics</a></li> --}}
+            @if (Auth::user()->role_id == 1)
+                <li>
+                    <a href="{{ url('/instruction/admin') }}" class="footer-link">Help & Documentation</a>
+                </li>
+            @elseif (Auth::user()->role_id == 2)
+                <li>
+                    <a href="{{ url('/instruction/cashier') }}" class="footer-link">Help & Documentation</a>
+                </li>
+            @else
+                <li>
+                    <a href="{{ url('/instruction/leader') }}" class="footer-link">Help & Documentation</a>
+                </li>
+            @endif
+
+
+
+            {{-- <li><a href="#" class="footer-link">Status <span class="status-dot"></span></a></li> --}}
             </ul>
         </div>
     </footer>

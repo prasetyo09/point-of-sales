@@ -28,7 +28,7 @@
             border-radius: 15px;
             transition: 0.2s;
             overflow: hidden;
-            
+
         }
 
         .product-card:hover {
@@ -150,7 +150,7 @@
                                     <i class="bi bi-cart4" style="font-size: 2rem"></i>
                                     <div>
                                         <small class="text-muted">Total Transaction</small>
-                                        <h4 class="mb-0 fw-bold" id="todayTransaction">{{ number_format($totalOrders) }} {{ $totalOrders === 1 ? 'Transaction' : 'Transactions' }}</h4>
+                                        <h4 class="mb-0 fw-bold" id="todayTransaction">{{ number_format($totalOrders) }} {{ $totalOrders === 1 ? 'Order' : 'Orders' }}</h4>
                                     </div>
                                 </div>
                             </div>
@@ -226,7 +226,10 @@
                                                     <span
                                                         class="badge bg-light text-dark mb-2">{{ $product->category->name }}</span>
                                                     <h6 class="fw-bold text-white">{{ $product->name ?? '' }}</h6>
-                                                    <span class="price">{{ number_format($product->price) }}</span>
+                                                    <div class="d-flex justify-content-between">
+                                                        <span class="price mb-4">{{ number_format($product->price) }}</span>
+                                                        <span class="fw-bold {{ $product->stock === 0 ? 'text-danger' : 'text-dark' }} h-50 px-2 bg-light rounded-3">{{ $product->stock ?? '' }} {{ $product->stock === 0 ? 'Sold Out' : '' }}</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -288,7 +291,7 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-4 bg-light">
-                    
+
                     <!-- Ringkasan Tagihan Card -->
                     <div class="card border-0 shadow-sm rounded-3 mb-4 bg-white">
                         <div class="card-body d-flex justify-content-between align-items-center p-3">
@@ -308,7 +311,7 @@
                                 <h6 class="fw-bold text-success mb-3 d-flex align-items-center gap-2">
                                     <i class="bi bi-person-lines-fill"></i> Customer Data
                                 </h6>
-                                
+
                                 <div class="mb-3">
                                     <label class="form-label small fw-semibold text-secondary">Full Name</label>
                                     <input type="text" id="customer_name" class="form-control rounded-3 border-light-subtle shadow-none custom-input" placeholder="Enter Your Name...">
@@ -381,7 +384,7 @@
                     </div>
 
                 </div>
-                
+
                 <div class="modal-footer bg-white border-top-0 px-4 py-3 d-flex justify-content-between">
                     <button type="button" class="btn btn-outline-secondary px-4 rounded-pill" data-bs-dismiss="modal">Cancel</button>
                     <button type="button" onclick="processPayment()" class="btn btn-success px-4 rounded-pill shadow-sm fw-semibold d-flex align-items-center gap-2">
@@ -580,7 +583,7 @@
             cart = [];
             displayCart();
         }
-            
+
 
         function removeItem(productId) {
             cart = cart.filter(function (item) {
@@ -825,7 +828,7 @@
             }
         }
 
-        
+
     </script>
 </body>
 

@@ -115,7 +115,7 @@
                 <div class="icon">👤</div>
                 <div>
                     <h1>Admin</h1>
-                    <p>Tata cara penggunaan aplikasi POS</p>
+                    <p>Procedures for using the POS application</p>
                 </div>
             </div>
 
@@ -123,27 +123,27 @@
 
                 <div class="step">
                     <div class="number">1</div>
-                    <p>Login ke dalam aplikasi POS menggunakan akun <strong>Admin</strong>.</p>
+                    <p>Log in to the POS application using an <strong>Admin</strong> account.</p>
                 </div>
 
                 <div class="step">
                     <div class="number">2</div>
-                    <p>Pilih menu <strong>User</strong> untuk menambah, mengubah, atau menghapus data pengguna.</p>
+                    <p>Select the <strong>User</strong> menu to add, modify, or delete user data.</p>
                 </div>
 
                 <div class="step">
                     <div class="number">3</div>
-                    <p>Pilih menu <strong>Produk</strong> untuk menambah, mengubah, atau menghapus data produk.</p>
+                    <p>Select the <strong>Products</strong> menu to add, modify, or delete product data.</p>
                 </div>
 
                 <div class="step">
                     <div class="number">4</div>
-                    <p>Pilih menu <strong>Kategori Produk</strong> untuk menambah, mengubah, atau menghapus kategori produk.</p>
+                    <p>Select the <strong>Product Categories</strong> menu to add, edit, or delete product categories.</p>
                 </div>
 
                 <div class="step">
                     <div class="number">5</div>
-                    <p>Pastikan seluruh data yang dimasukkan sudah sesuai.</p>
+                    <p>Ensure that all entered data is correct.</p>
                 </div>
 
             </div>

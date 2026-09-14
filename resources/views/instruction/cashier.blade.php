@@ -123,7 +123,7 @@
 
             <div>
                 <h1>Cashier</h1>
-                <p>Tata cara penggunaan aplikasi POS</p>
+                <p>Procedures for using the POS application</p>
             </div>
         </div>
 
@@ -131,42 +131,42 @@
 
             <div class="step">
                 <div class="number">1</div>
-                <p>Login ke dalam aplikasi POS menggunakan akun <strong>Cashier</strong>.</p>
+                <p>Log in to the POS application using an <strong>Cashier</strong> account.</p>
             </div>
 
             <div class="step">
                 <div class="number">2</div>
-                <p>Pilih menu <strong>Transaksi Penjualan</strong>.</p>
+                <p>Select the <strong>Order Transaction</strong> menu.</p>
             </div>
 
             <div class="step">
                 <div class="number">3</div>
-                <p>Pilih produk yang ingin dibeli oleh pelanggan.</p>
+                <p>Select the product the customer wants to buy.</p>
             </div>
 
             <div class="step">
                 <div class="number">4</div>
-                <p>Masukkan jumlah produk yang dibeli.</p>
+                <p>Enter the number of products purchased.</p>
             </div>
 
             <div class="step">
                 <div class="number">5</div>
-                <p>Periksa kembali daftar produk dan total transaksi.</p>
+                <p>Double-check the product list and the transaction total.</p>
             </div>
 
             <div class="step">
                 <div class="number">6</div>
-                <p>Proses transaksi penjualan dan pembayaran pelanggan.</p>
+                <p>Customer sales transaction and payment process.</p>
             </div>
 
             <div class="step">
                 <div class="number">7</div>
-                <p>Untuk melihat ketersediaan barang, pilih menu <strong>Master Produk</strong>.</p>
+                <p>To check product availability, select the <strong>Product</strong> menu.</p>
             </div>
 
             <div class="step">
                 <div class="number">8</div>
-                <p>Periksa jumlah stok produk pada daftar produk.</p>
+                <p>Check the product stock quantity in the product list.</p>
             </div>
 
         </div>
