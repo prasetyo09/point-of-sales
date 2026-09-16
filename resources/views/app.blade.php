@@ -54,7 +54,7 @@
     <!-- Brand Logo / Identity -->
     <a href="3" class="sidebar-brand">
     <i class="bi bi-asterisk"></i>
-    <span>Restaurant - PPKD Jakpus</span>
+    <span>{{ $settings->app_name }}</span>
     </a>
 
     <!-- Navigation Menu -->
@@ -327,9 +327,11 @@
                 {{-- <li>
                     <a class="dropdown-item" href="#"><i class="bi bi-person"></i> My Account</a>
                 </li> --}}
+                @if (Auth::user()->role_id == 1)
                 <li>
-                    <a class="dropdown-item" href="#"><i class="bi bi-gear"></i> Settings</a>
+                    <a class="dropdown-item" href="{{ url('setting') }}"><i class="bi bi-gear"></i> Settings</a>
                 </li>
+                @endif
                 {{-- <li>
                     <a class="dropdown-item" href="#"><i class="bi bi-lock"></i> Lock Screen</a>
                 </li> --}}

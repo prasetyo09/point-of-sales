@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
+            $table->string('app_name');
+            $table->string('business_name');
+            $table->string('institution');
             $table->timestamps();
         });
     }

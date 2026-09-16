@@ -132,9 +132,9 @@
     <div class="container-fluid">
         <div class="card">
             <main class="col-lg-12 p-5">
-                <h3 class="fw-bold mb-1">POS - Restaurant</h3>
+                <h3 class="fw-bold mb-1">{{ $settings->business_name }}</h3>
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <p class="text-muted">Pusat Pelatihan Kerja Daerah Jakarta Pusat</p>
+                    <p class="text-muted">{{ $settings->institution }}</p>
                     <button class="btn btn-dark" onclick="clearCart()">Empty Cart</button>
                 </div>
                 <div class="mb-3">
