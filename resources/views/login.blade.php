@@ -161,20 +161,20 @@
     <!-- JavaScript Interaktif -->
     <script>
         // const loginForm = document.getElementById('loginForm');
-        // const togglePasswordBtn = document.getElementById('togglePassword');
-        // const passwordInput = document.getElementById('password');
-        // const toggleIcon = document.getElementById('toggleIcon');
+        const togglePasswordBtn = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+        const toggleIcon = document.getElementById('toggleIcon');
         // const submitBtn = document.getElementById('submitBtn');
 
         // // Toggle Lihat Password
-        // togglePasswordBtn.addEventListener('click', function () {
-        //     const isPassword = passwordInput.getAttribute('type') === 'password';
-        //     passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+        togglePasswordBtn.addEventListener('click', function () {
+            const isPassword = passwordInput.getAttribute('type') === 'password';
+            passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
 
-        //     // Ganti icon
-        //     toggleIcon.classList.toggle('bi-eye');
-        //     toggleIcon.classList.toggle('bi-eye-slash');
-        // });
+            // Ganti icon
+            toggleIcon.classList.toggle('bi-eye');
+            toggleIcon.classList.toggle('bi-eye-slash');
+        });
 
         // // Handle Submit Form
         // loginForm.addEventListener('submit', function (event) {
