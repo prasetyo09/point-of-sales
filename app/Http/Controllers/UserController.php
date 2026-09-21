@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Role;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -39,14 +40,36 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        User::create([
+        $request->validate([
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|email|unique:users,email,',
+            'role_id'  => 'required',
+            'password' => 'nullable|min:6',
+            'user_photo' => 'nullable|image|max:5120'
+        ]);
+
+        $data = [
             'name' => $request->name,
             'email' => $request->email,
             'role_id' => $request->role_id,
-            'password' => $request->password
-        ]);
+            'password' => $request->password,
+        ];
 
+        if ($request->hasFile('user_photo')) {
+            $data['user_photo'] = $request->file('user_photo')->store('users', 'public');
+        }
+
+        User::create($data);
         return redirect()->to('user')->with('success', 'User successfully saved!');
+
+        // User::create([
+        //     'name' => $request->name,
+        //     'email' => $request->email,
+        //     'role_id' => $request->role_id,
+        //     'password' => $request->password
+        // ]);
+
+        // return redirect()->to('user')->with('success', 'User successfully saved!');
     }
 
     /**
@@ -74,14 +97,14 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // dd($request->all());
         $user = User::findOrFail($id);
 
         $request->validate([
             'name'     => 'required|string|max:255',
             'email'    => 'required|email|unique:users,email,' . $user->id,
             'role_id'  => 'required',
-            'password' => 'nullable|min:6'
+            'password' => 'nullable|min:6',
+            'user_photo' => 'nullable'
         ]);
 
         $data = [
@@ -92,6 +115,15 @@ class UserController extends Controller
 
         if ($request->filled('password')) {
             $data['password'] = Hash::make($request->password);
+        }
+
+        if ($request->hasFile('user_photo'))
+        {
+            if ($user->user_photo) {
+                Storage::disk('public')->delete($user->user_photo);
+            }
+
+            $data['user_photo'] = $request->file('user_photo')->store('users', 'public');
         }
 
         $user->update($data);

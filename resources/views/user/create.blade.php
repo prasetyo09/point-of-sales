@@ -11,7 +11,7 @@
             {{-- <div class="d-flex justify-content-end">
                 <a href="{{ url('role') }}" class="btn btn-success mb-3"><i class="bi bi-arrow-left"></i>Back</a>
             </div> --}}
-            <form action="{{ route('user.store') }}" method="post">
+            <form action="{{ route('user.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
                     <label for="" class="form-label fw-bold">Nama</label>
@@ -20,6 +20,10 @@
                 <div class="mb-3">
                     <label for="" class="form-label fw-bold">Email</label>
                     <input type="email" name="email" id="email" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="" class="form-label fw-bold">Photo</label>
+                    <input type="file" name="user_photo" id="user_photo" class="form-control">
                 </div>
                 <div class="mb-3">
                     <label for="" class="form-label fw-bold">Role</label>

@@ -12,7 +12,6 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\InstructionController;
-use App\Http\Controllers\MidtransWebhookController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {

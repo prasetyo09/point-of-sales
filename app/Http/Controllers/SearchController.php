@@ -12,7 +12,7 @@ class SearchController extends Controller
 {
     public function index(Request $request){
         $keyword = $request->input('keyword');
-
+        
         if (blank($keyword)) {
             $results = [
                 'products'   => collect(),

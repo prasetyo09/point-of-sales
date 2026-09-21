@@ -11,7 +11,7 @@
             {{-- <div class="d-flex justify-content-end">
                 <a href="{{ url('role') }}" class="btn btn-success mb-3"><i class="bi bi-arrow-left"></i>Back</a>
             </div> --}}
-            <form action="{{ route('user.update', $users->id) }}" method="POST">
+            <form action="{{ route('user.update', $users->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="mb-3">
@@ -22,6 +22,10 @@
                     <label for="" class="form-label fw-bold">Email</label>
                     <input type="email" name="email" id="email" class="form-control" value="{{ $users->email }}">
                 </div>
+                <div class="mb-3">
+                        <label for="" class="form-label fw-bold">Photo (1:1)</label>
+                        <input type="file" name="user_photo" id="user_photo" class="form-control">
+                    </div>
                 <div class="mb-3">
                     <label for="" class="form-label fw-bold">Role</label>
                     <select name="role_id" id="" class="form-control">

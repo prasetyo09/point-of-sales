@@ -34,7 +34,14 @@
         @foreach ($users as $index => $v )
         <tr>
             <td class="text-center">{{ $index + 1 }}</td>
-            <td class="text-center">{{ $v->name }}</td>
+            <td class="text-center">
+                <div class="d-flex align-items-center gap-2">
+                    <img src="{{ Storage::url($v->user_photo) }}" alt="Gambar" width="80" height="80" style="object-fit: cover">
+                    <div class="fw-semibold">
+                        {{ $v->name }}
+                    </div>
+                </div>
+            </td>
             <td class="text-center">{{ $v->email }}</td>
             <td class="text-center">{{ $v->role->name }}</td>
             <td class="text-center">

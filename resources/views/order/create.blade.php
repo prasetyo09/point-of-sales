@@ -368,13 +368,13 @@
                                     </label>
                                 </div>
                                 <div class="only-cash d-none mt-3 p-3 bg-light rounded-3 border border-success-subtle">
-                                    <label for="cash_paid" class="form-label small fw-semibold text-secondary">Nominal Tunai Diterima</label>
+                                    <label for="cash_paid" class="form-label small fw-semibold text-secondary">Cash Amount Received</label>
                                     <div class="input-group mb-2">
                                         <span class="input-group-text bg-white border-light-subtle text-muted">Rp</span>
                                         <input type="number" id="cash_paid" step="any" min="0" class="form-control border-light-subtle shadow-none" placeholder="0" oninput="calculateChange()">
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center pt-2 border-top">
-                                        <span class="small text-secondary">Kembalian:</span>
+                                        <span class="small text-secondary">Change:</span>
                                         <strong class="text-success" id="change-paid">Rp 0</strong>
                                     </div>
                                 </div>
@@ -407,7 +407,7 @@
                     <iframe id="receiptFrame" src="" style="width: 100%; height: 500px; border: none;"></iframe>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="location.reload()">Selesai</button>
+                    <button type="button" class="btn btn-secondary" onclick="location.reload()">Done</button>
                 </div>
             </div>
         </div>
@@ -686,7 +686,7 @@
             const customerAddress= document.getElementById('customer_address').value || 'Unknown';
 
             if (!selectedPayment) {
-                alert('PILIH METODE PEMBAYARAN!!!');
+                alert('SELECT A PAYMENT METHOD!');
                 return;
             }
 
@@ -698,13 +698,13 @@
                 const cashPaidValue = parseFloat(cashPayInput?.value) || 0;
 
                 if (!cashPaidValue) {
-                    alert("Input pembayaran terlebih dahulu!");
+                    alert("Input payment first!");
                     cashPayInput.focus();
                     return;
                 }
 
                 if (cashPaidValue < total) {
-                    alert("Total bayar kurang!!!");
+                    alert("Total payment is insufficient!");
                     cashPayInput.focus();
                     return;
                 }
@@ -757,7 +757,7 @@
 
                             openReceipt(result.order_id);
 
-                            alert("payment success!");
+                            alert("Payment Success!");
                             cart = [];
                             displayCart();
                             // location.reload();
@@ -767,25 +767,25 @@
                         onPending: function (snapResult) {
                             /* You may add your own implementation here */
 
-                            alert("waiting your payment!");
+                            alert("Waiting Your Payment!");
                             // console.log(result);
                         },
                         onError: function (snapResult) {
                             /* You may add your own implementation here */
 
-                            alert("payment failed!");
+                            alert("Payment Failed!");
 
                             // console.log(result);
                         },
                         onClose: function () {
                             /* You may add your own implementation here */
 
-                            alert('you closed the popup without finishing the payment');
+                            alert('You Closed the Pop Up Without Finishing the Payment');
                         }
                     });
                 } else {
                     await loadDashboardData();
-                    alert("Transaksi Cash Berhasil");
+                    alert("Cash Transaction Successful!");
                     openReceipt(result.order_id);
 
                     const paymentModalEl = document.getElementById('paymentMethod');

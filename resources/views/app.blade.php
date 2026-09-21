@@ -177,7 +177,7 @@
 
     <!-- Sidebar Profile Card (Dynamic Footer) -->
     <div class="sidebar-profile">
-        <img src="assets/images/avatar.png" alt="Administrator" class="sidebar-profile-img"
+        <img src="{{ Storage::url( Auth::user()->user_photo ?? '') }}" alt="Administrator" class="sidebar-profile-img"
             onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop'">
         <div class="sidebar-profile-info">
             <div class="sidebar-profile-name">{{ Auth::user()->name ?? 'Pengguna' }}</div>
@@ -318,7 +318,7 @@
         <div class="dropdown ms-2">
             <button class="navbar-profile-btn dropdown-toggle no-print" type="button" data-bs-toggle="dropdown"
                 aria-expanded="false" id="profile-dropdown">
-                <img src="{{ asset('assets/assets/images/avatar.png') }}" alt="Profile Image" class="navbar-profile-img">
+                <img src="{{ Storage::url( Auth::user()->user_photo ?? '') }}" alt="Profile Image" class="navbar-profile-img">
                 <span class="navbar-profile-name d-none d-md-inline">{{ Auth::user()->name ?? 'Pengguna' }}</span>
                 <i class="bi bi-chevron-down navbar-profile-caret"></i>
             </button>

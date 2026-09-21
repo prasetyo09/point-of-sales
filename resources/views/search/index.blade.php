@@ -22,9 +22,9 @@
                                 + $results['users']->count()
                                 + $results['roles']->count();
             @endphp
-            <span class="badge bg-success fs-6 px-3 py-2 rounded-pill">
+            {{-- <span class="badge bg-success fs-6 px-3 py-2 rounded-pill">
                 {{ $totalResults }} Found
-            </span>
+            </span> --}}
         </div>
     </div>
 
@@ -72,6 +72,7 @@
             </div>
 
             <!-- 2. Kategori: Categories -->
+            @if (Auth::user()->role_id === 1)
             <div class="col-12 col-lg-6">
                 <div class="card border-0 shadow-sm rounded-3 h-100">
                     <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center border-bottom">
@@ -158,6 +159,7 @@
                 </div>
             </div>
         </div>
+        @endif
     @endif
 </div>
 @endsection
