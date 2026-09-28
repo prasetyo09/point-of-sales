@@ -827,8 +827,7 @@
                 console.error('Dashboard error:', error);
             }
         }
-
-
+        
     </script>
 </body>
 
