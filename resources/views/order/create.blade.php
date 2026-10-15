@@ -387,7 +387,7 @@
 
                 <div class="modal-footer bg-white border-top-0 px-4 py-3 d-flex justify-content-between">
                     <button type="button" class="btn btn-outline-secondary px-4 rounded-pill" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" onclick="processPayment()" class="btn btn-success px-4 rounded-pill shadow-sm fw-semibold d-flex align-items-center gap-2">
+                    <button type="button" onclick="processPayment()" class="btn btn-success px-4 rounded-pill shadow-sm fw-semibold d-flex align-items-center gap-2" id="btn-confirm-pay">
                         <i class="bi bi-lock-fill"></i> Pay Now
                     </button>
                 </div>
@@ -673,6 +673,13 @@
         }
 
         async function processPayment() {
+            let cartIdempotencyKey = (window.crypto && crypto.randomUUID) 
+            ? crypto.randomUUID() 
+            : 'idemp-' + Date.now() + '-' + Math.random().toString(36).substring(2, 9);
+
+            const payBtn = document.getElementById('btn-confirm-pay'); // ganti dengan id tombol bayarmu
+            if (payBtn) payBtn.disabled = true;
+
             if (cart.length === 0) {
                 alert('Cart is Empty')
                 return;
@@ -727,6 +734,7 @@
                                 qty: item.qty
                             }
                         }),
+                        idempotency_key: cartIdempotencyKey,
                         payment_method: paymentMethod,
                         change: changeMoney,
                         customer_name: customerName,
@@ -784,9 +792,9 @@
                         }
                     });
                 } else {
-                    await loadDashboardData();
                     alert("Cash Transaction Successful!");
                     openReceipt(result.order_id);
+                    await loadDashboardData();
 
                     const paymentModalEl = document.getElementById('paymentMethod');
                     const paymentModal = bootstrap.Modal.getInstance(paymentModalEl);
@@ -798,6 +806,7 @@
                 }
             } catch (error) {
                 console.log(error)
+                if (payBtn) payBtn.disabled = false;
                 alert(error.message);
             }
         }

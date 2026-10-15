@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -14,17 +17,34 @@ class LoginController extends Controller
     public function actionLogin(Request $request){
         $credentials = $request->validate([
             'email' => 'required|email',
-            'password' => 'required|min:8'
+            'password' => 'required'
         ]);
 
-        if (Auth::attempt($credentials)) {
+        $throttleKey = Str::transliterate(Str::lower($request->input('email')).'|'.$request->ip());
+
+        if (RateLimiter::tooManyAttempts($throttleKey, 5)) {
+            $seconds = RateLimiter::availableIn($throttleKey);
+
+            throw ValidationException::withMessages([
+                'email' => "Too many login attempts. Try again in {$seconds} seconds.",
+            ]);
+        }
+
+        if (Auth::attempt($credentials, $request->boolean('remember'))) {
+            RateLimiter::clear($throttleKey);
             $request->session()->regenerate();
             return redirect()->intended('/dashboard');
         }
 
-        return back()
-        ->withErrors(['email' => 'Invalid Email or Password'])
-        ->onlyInput('email');
+        RateLimiter::hit($throttleKey, 60);
+
+        throw ValidationException::withMessages([
+            'email' => 'Email or Password you entered is incorrect.',
+        ]);
+
+        // return back()
+        // ->withErrors(['email' => 'Invalid Email or Password'])
+        // ->onlyInput('email');
     }
 
     public function logout(Request $request){

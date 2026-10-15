@@ -4,6 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title class="no-print">{{ $title ?? 'Dashboard' }} - POS Restaurant </title>
 
     <!-- SEO Optimization -->
@@ -423,6 +426,14 @@
     <script>
         const table = new DataTable('#myTable', {
         // Configuration options
+        });
+
+        window.addEventListener('pageshow', function (event) {
+        // Jika halaman dibuka kembali lewat navigasi back/forward browser
+        if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+            // Paksa muat ulang halaman dari server agar middleware langsung memblokir tampilan
+            window.location.reload();
+        }
         });
     </script>
 </body>

@@ -50,7 +50,7 @@
 
                 @if ($errors->any())
                     <div class="alert alert-danger">
-                        <strong>Terjadi Kesalahan Input</strong>
+                        <strong>Input Error Occurred</strong>
                         <ul>
                             @foreach ($errors->all() as $error )
                                 <li>{{ $error }}</li>

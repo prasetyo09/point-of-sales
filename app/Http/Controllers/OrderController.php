@@ -10,6 +10,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 use Midtrans\Config;
 use Midtrans\Snap;
 use Carbon\Carbon;
@@ -84,16 +85,33 @@ class OrderController extends Controller
             'items' => 'required|array',
             'items.*.id' => 'required|exists:products,id',
             'items.*.qty' => 'required|integer|min:1',
-            'payment_method' => 'nullable|string'
+            'payment_method' => 'nullable|string',
+            'idempotency_key' => 'required|string'
         ]);
 
+        $idempotencyKey = 'checkout_lock_' .$request->input('idempotency_key');
+
+        // 1. Dapatkan lock selama 10 detik. Jika request kedua masuk bersamaan, langsung ditolak.
+        $lock = Cache::lock($idempotencyKey, 10);
+
+        if (! $lock->get()) {
+            return response()->json([
+                'message' => 'The transaction is being processed. Please do not press the pay button repeatedly.'
+            ], 429); // 429 Too Many Requests
+        }
+
         try {
-            return DB::transaction(function () use ($request) {
+            $cachedResponse = Cache::get('order_response_' .$request->input('idempotency_key'));
+            if ($cachedResponse) {
+                return response()->json($cachedResponse, 200);
+            }
+            
+            $responseData = DB::transaction(function () use ($request) {
                 $subTotal = 0;
                 $itemsData = [];
 
                 foreach ($request->items as $item) {
-                    $product = Product::findOrFail($item['id']);
+                    $product = Product::lockForUpdate()->findOrFail($item['id']);
 
                     if ($product->stock < $item['qty']) {
                         throw new Exception("Stok produk '{$product->name}' tidak mencukupi.");
@@ -189,25 +207,32 @@ class OrderController extends Controller
 
                     $snapToken = Snap::getSnapToken($params);
 
-                    return response()->json([
+                    return [
                         'success' => true,
                         'payment_method' => 'midtrans',
                         'snap_token' => $snapToken,
                         'order_id' => $order->id
-                    ]);
+                    ];
 
                 }
-                return response()->json([
+                return [
                     'success' => true,
                     'payment_method' => 'cash',
                     'order_id' => $order->id
-                ]);
+                ];
             });
+
+            Cache::put('order_response_' . $request->input('idempotency_key'),$responseData, now()->addHour());
+            return response()->json($responseData, 200);
+
         } catch (Exception $th) {
             return response()->json([
                 'message' => 'GAGAL MENYIMPAN TRANSAKSI!!! ' . $th->getMessage()
             ], 400);
-        }
+        } finally {
+            // Buka lock setelah proses selesai
+            $lock->release();
+        } 
     }
 
     /**

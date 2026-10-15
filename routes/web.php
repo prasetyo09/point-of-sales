@@ -20,11 +20,11 @@ Route::get('/', function () {
 
 Route::prefix('admin')->group(function(){
     Route::get("/", [LoginController::class, 'login']);
-    Route::get("/login", [LoginController::class, 'login']);
+    Route::get("/login", [LoginController::class, 'login'])->name('login');
     Route::post('/action-login', [LoginController::class, 'actionLogin'])->name('action-login');
 });
 
-Route::middleware('auth')->group(function(){
+Route::middleware(['auth', 'prevent-back'])->group(function () {
     Route::resource('dashboard', DashboardController::class);
     Route::resource('user', UserController::class);
     Route::resource('role', RoleController::class);
