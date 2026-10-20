@@ -25,5 +25,9 @@ class AppServiceProvider extends ServiceProvider
             $settings = Setting::first();
             view()->share('settings', $settings);
         }
+
+        if (config('app.env') === 'production') {
+            URL::forceScheme('https');
+        }
     }
 }
