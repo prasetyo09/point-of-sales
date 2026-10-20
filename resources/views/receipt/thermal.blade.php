@@ -31,7 +31,7 @@
 </head>
 <body>
     <div class="text-center">
-        <strong>POS - Laundry</strong><br>
+        <strong>{{ $settings->business_name }}</strong><br>
         Jl. Karet Pasar Baru Barat V No. 23, Jakarta Pusat<br>
         Telp: 0812-0000-0000
     </div>
@@ -74,6 +74,14 @@
     <div class="divider"></div>
 
     <table>
+        <tr>
+            <td>Subtotal</td>
+            <td class="text-right">Rp {{ number_format($subtotal, 2, ',', '.') }}</td>
+        </tr>
+        <tr>
+            <td>Tax (10%)</td>
+            <td class="text-right">Rp {{ number_format($tax, 2, ',', '.') }}</td>
+        </tr>
         <tr>
             <td><strong>TOTAL BILL</strong></td>
             <td class="text-right"><strong>Rp {{ number_format($transaction->total_price, 2, ',', '.') }}</strong></td>

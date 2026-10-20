@@ -128,17 +128,17 @@
 
                 <div class="step">
                     <div class="number">2</div>
-                    <p>Select the <strong>User</strong> menu to add, modify, or delete user data.</p>
+                    <p>Select the <a href="{{ url('user') }}"><strong>User</strong></a>  menu to add, modify, or delete user data.</p>
                 </div>
 
                 <div class="step">
                     <div class="number">3</div>
-                    <p>Select the <strong>Products</strong> menu to add, modify, or delete product data.</p>
+                    <p>Select the <a href="{{ url('product') }}"><strong>Product</strong></a> menu to add, modify, or delete product data.</p>
                 </div>
 
                 <div class="step">
                     <div class="number">4</div>
-                    <p>Select the <strong>Product Categories</strong> menu to add, edit, or delete product categories.</p>
+                    <p>Select the <a href="{{ url('category') }}"><strong>Category</strong></a> menu to add, edit, or delete product categories.</p>
                 </div>
 
                 <div class="step">

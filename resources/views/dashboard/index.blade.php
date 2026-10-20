@@ -35,7 +35,7 @@
                     </span>
                 </div>
                 <small class="text-muted d-block">
-                    Point of Sale Management Portal
+                    Point of Sales Management Portal
                 </small>
             </div>
         </div>

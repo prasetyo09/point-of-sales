@@ -136,7 +136,7 @@
 
             <div class="step">
                 <div class="number">2</div>
-                <p>Select the <strong>Order Transaction</strong> menu.</p>
+                <p>Select the <a href="{{ url('order') }}"><strong>Order Transaction</strong></a> menu.</p>
             </div>
 
             <div class="step">
@@ -161,7 +161,7 @@
 
             <div class="step">
                 <div class="number">7</div>
-                <p>To check product availability, select the <strong>Product</strong> menu.</p>
+                <p>To check product availability, select the <a href="{{ url('product') }}"><strong>Product</strong></a> menu.</p>
             </div>
 
             <div class="step">

@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\OrderDetail;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class ReceiptController extends Controller
 {
     public function printReceipt(string $id){
         $transaction = Order::with('items')->findOrFail($id);
+
+        $subtotal = $transaction->items->sum('subtotal');
+        $tax = $subtotal * 0.1;
 
         // 2. Hitung jumlah item dengan aman
         // optional() & count() memastikan tidak akan error meski items bernilai null atau belum terisi
@@ -26,7 +30,7 @@ class ReceiptController extends Controller
         $totalHeight = $baseHeight + ($itemCount * 25);
 
         // 4. Render PDF struk
-        $pdf = Pdf::loadView('receipt.thermal', compact('transaction'))->setPaper([0, 0, $paperWidth, $totalHeight], 'portrait');
+        $pdf = Pdf::loadView('receipt.thermal', compact('transaction', 'subtotal', 'tax'))->setPaper([0, 0, $paperWidth, $totalHeight], 'portrait');
 
         return $pdf->stream('struk-' . $transaction->order_code . '.pdf');
     }
