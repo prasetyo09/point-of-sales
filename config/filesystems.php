@@ -34,8 +34,7 @@ return [
             'driver' => 'local',
             'root' => storage_path('app'),
             'serve' => true,
-            'throw' => false,
-            'report' => false,
+            'throw' => false
         ],
 
         'public' => [
@@ -43,8 +42,7 @@ return [
             'root' => env('APP_ENV') === 'production' ? '/tmp/storage/app/public' : storage_path('app/public'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
-            'throw' => false,
-            'report' => false,
+            'throw' => false
         ],
 
         's3' => [
