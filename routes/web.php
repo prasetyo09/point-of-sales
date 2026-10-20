@@ -14,9 +14,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\InstructionController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [LoginController::class, 'login']);
 
 Route::prefix('admin')->group(function(){
     Route::get("/", [LoginController::class, 'login']);
