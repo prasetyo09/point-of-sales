@@ -327,7 +327,14 @@
         <div class="dropdown ms-2">
             <button class="navbar-profile-btn dropdown-toggle no-print" type="button" data-bs-toggle="dropdown"
                 aria-expanded="false" id="profile-dropdown">
-                <img src="{{ Storage::url( Auth::user()->user_photo ?? '') }}" alt="Profile Image" class="navbar-profile-img">
+                @php
+                    $userPhoto = Auth::user()->user_photo ?? null;
+                    $avatarUrl = $userPhoto 
+                        ? asset('storage/' . $userPhoto) 
+                        : 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop';
+                @endphp
+
+                <img src="{{ $avatarUrl }}" alt="Administrator" class="sidebar-profile-img" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop'">
                 <span class="navbar-profile-name d-none d-md-inline">{{ Auth::user()->name ?? 'Pengguna' }}</span>
                 <i class="bi bi-chevron-down navbar-profile-caret"></i>
             </button>
