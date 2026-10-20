@@ -36,7 +36,13 @@
             <td class="text-center">{{ $index + 1 }}</td>
             <td class="text-center">
                 <div class="d-flex align-items-center gap-2">
-                    <img src="{{ Storage::url($v->user_photo) }}" alt="Gambar" width="80" height="80" style="object-fit: cover">
+                    @php
+                        $userPhoto = Auth::user()->user_photo ?? null;
+                        $avatarUrl = $userPhoto 
+                            ? asset('storage/' . $userPhoto) 
+                            : 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop';
+                    @endphp
+                    <img src="{{ $avatarUrl }}" alt="User Photo" class="sidebar-profile-img" width="80" height="80" style="object-fit: cover" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop'">
                     <div class="fw-semibold">
                         {{ $v->name }}
                     </div>
