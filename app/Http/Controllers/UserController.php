@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Role;
 use Illuminate\Support\Facades\Storage;
+use Cloudinary\Cloudinary;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -56,7 +58,20 @@ class UserController extends Controller
         ];
 
         if ($request->hasFile('user_photo')) {
-            $data['user_photo'] = $request->file('user_photo')->store('users', 'public');
+            // $data['user_photo'] = $request->file('user_photo')->store('users', 'public');
+            $upload = $cloudinary->uploadApi()->upload(
+                $request->file('user_photo')->getRealPath(),
+                [
+                    'folder' => 'users',
+                    'public_id' => 'user_' . $user->id . '_' . Str::uuid(),
+                    'resource_type' => 'image',
+                ]
+            );
+
+            $data['user_photo'] = $upload['secure_url'];
+            $data['user_photo_public_id'] = $upload['public_id'];
+
+            $newPublicId = $upload['public_id'];
         }
 
         User::create($data);
@@ -117,16 +132,54 @@ class UserController extends Controller
             $data['password'] = Hash::make($request->password);
         }
 
+        $cloudinary = new Cloudinary();
+        $newPublicId = null;
+
         if ($request->hasFile('user_photo'))
         {
-            if ($user->user_photo) {
-                Storage::disk('public')->delete($user->user_photo);
-            }
+            // if ($user->user_photo) {
+            //     Storage::disk('public')->delete($user->user_photo);
+            // }
 
-            $data['user_photo'] = $request->file('user_photo')->store('users', 'public');
+            // $data['user_photo'] = $request->file('user_photo')->store('users', 'public');
+            
+            $upload = $cloudinary->uploadApi()->upload(
+                $request->file('user_photo')->getRealPath(),
+                [
+                    'folder' => 'users',
+                    'public_id' => 'user_' . $user->id . '_' . Str::uuid(),
+                    'resource_type' => 'image',
+                ]
+            );
+
+            $data['user_photo'] = $upload['secure_url'];
+            $data['user_photo_public_id'] = $upload['public_id'];
+
+            $newPublicId = $upload['public_id'];
         }
 
-        $user->update($data);
+        // $user->update($data);
+
+        $oldPublicId = $user->user_photo_public_id;
+
+        try {
+            // Perbarui data user di database Aiven
+            $user->update($data);
+
+        } catch (\Throwable $e) {
+
+            // Jika update database gagal, hapus foto baru
+            if ($newPublicId) {
+                $cloudinary->uploadApi()->destroy($newPublicId);
+            }
+
+            throw $e;
+        }
+
+        // Hapus foto lama setelah database berhasil diperbarui
+        if ($newPublicId && $oldPublicId) {
+            $cloudinary->uploadApi()->destroy($oldPublicId);
+        }
 
         return redirect()->to('user')->with('success', 'User successfully updated!');
     }

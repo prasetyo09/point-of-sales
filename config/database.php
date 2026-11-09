@@ -58,12 +58,13 @@ return [
             'prefix' => '',
             'prefix_indexes' => true,
             'strict' => true,
-            'engine' => null,
+            'engine' => null,        
             'options' => extension_loaded('pdo_mysql') ? array_filter([
-                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA_PATH') 
+                Pdo\Mysql::ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA_PATH')
                     ?: (env('MYSQL_ATTR_SSL_CA') ? '/tmp/ca.pem' : null),
-                PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
-            ]) : [],
+
+                Pdo\Mysql::ATTR_SSL_VERIFY_SERVER_CERT => false,
+            ], fn ($value) => $value !== null) : [],
         ],
 
         'mariadb' => [

@@ -37,23 +37,19 @@
             <td class="text-center">
                 <div class="d-flex align-items-center gap-2">
                     @php
+                        $userPhoto = Auth::user()->user_photo ?? null;
+
                         $fallbackPhoto = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop';
-                        $photoUrl = $v->photo
-                            ? Storage::disk('public')->url($v->photo)
-                            : $fallbackPhoto;
+
+                        $avatarUrl = $userPhoto ?: $fallbackPhoto;
                     @endphp
 
                     <img
-                        src="{{ $photoUrl }}"
-                        alt="Gambar"
-                        width="80"
-                        height="80"
-                        style="object-fit: cover"
+                        src="{{ $avatarUrl }}"
+                        alt="Administrator"
+                        class="navbar-profile-img"
                         onerror="this.onerror=null; this.src='{{ $fallbackPhoto }}';"
                     >
-                    <div class="fw-semibold">
-                        {{ $v->name }}
-                    </div>
                 </div>
             </td>
             <td class="text-center">{{ $v->email }}</td>
