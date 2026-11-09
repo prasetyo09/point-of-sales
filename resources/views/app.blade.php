@@ -334,7 +334,7 @@
                         : 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop';
                 @endphp
 
-                <img src="{{ $avatarUrl }}" alt="Administrator" class="navbar-profile-img" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop'">
+                <img src="https://res.cloudinary.com/hxw7bjyy/image/upload/v1794213073/admin.png" alt="Administrator" class="navbar-profile-img" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop'">
                 <span class="navbar-profile-name d-none d-md-inline">{{ Auth::user()->name ?? 'Pengguna' }}</span>
                 <i class="bi bi-chevron-down navbar-profile-caret"></i>
             </button>
