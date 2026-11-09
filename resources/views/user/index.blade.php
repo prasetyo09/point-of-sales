@@ -37,7 +37,7 @@
             <td class="text-center">
                 <div class="d-flex align-items-center gap-2">
                     @php
-                        $userPhoto = Auth::user()->user_photo ?? null;
+                        $userPhoto = Auth::user()->user_photo_public_id ?? null;
 
                         $fallbackPhoto = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop';
 
@@ -48,6 +48,9 @@
                         src="{{ $avatarUrl }}"
                         alt="Administrator"
                         class="navbar-profile-img"
+                        width="80"
+                        height="80"
+                        style="object-fit: cover"
                         onerror="this.onerror=null; this.src='{{ $fallbackPhoto }}';"
                     >
                 </div>
