@@ -53,7 +53,19 @@ class ProductController extends Controller
         ];
 
         if ($request->hasFile('photo')) {
-            $data['photo'] = $request->file('photo')->store('products', 'public');
+            $upload = $cloudinary->uploadApi()->upload(
+                $request->file('photo')->getRealPath(),
+                [
+                    'folder' => 'products',
+                    'public_id' => 'prodct_' . $product->id . '_' . Str::uuid(),
+                    'resource_type' => 'image',
+                ]
+            );
+
+            $data['photo'] = $upload['secure_url'];
+            $data['product_photo_public_id'] = $upload['public_id'];
+
+            $newPublicId = $upload['public_id'];
         }
 
         Product::create($data);
@@ -96,27 +108,62 @@ class ProductController extends Controller
             'description' => $request->description
         ];
 
-        if($request->hasFile('photo'))
-        {
-            if ($product->photo) {
-                Storage::disk('public')->delete($product->photo);
-            }
+        $cloudinary = new Cloudinary();
+        $newPublicId = null;
 
-            $data['photo'] = $request->file('photo')->store('products', 'public');
+        if ($request->hasFile('photo'))
+        {
+            $upload = $cloudinary->uploadApi()->upload(
+                $request->file('photo')->getRealPath(),
+                [
+                    'folder' => 'products',
+                    'public_id' => 'product_' . $product->id . '_' . Str::uuid(),
+                    'resource_type' => 'image',
+                ]
+            );
+
+            $data['photo'] = $upload['secure_url'];
+            $data['product_photo_public_id'] = $upload['public_id'];
+
+            $newPublicId = $upload['public_id'];
         }
 
-        $product->update($data);
+        $oldPublicId = $product->product_photo_public_id;
+
+        try {
+            $product->update($data);
+
+        } catch (\Throwable $e) {
+
+            // Jika update database gagal, hapus foto baru
+            if ($newPublicId) {
+                $cloudinary->uploadApi()->destroy($newPublicId);
+            }
+
+            throw $e;
+        }
+
+        // Hapus foto lama setelah database berhasil diperbarui
+        if ($newPublicId && $oldPublicId) {
+            $cloudinary->uploadApi()->destroy($oldPublicId);
+        }
         return redirect()->to('product')->with('success', 'Update Product Success');
     }
 
     /**
      * Remove the specified resource from storage.
      */
+    
     public function destroy(Product $product)
     {
-        if ($product->photo) {
-            Storage::disk('public')->delete($product->photo);
+        if ($product->product_photo_public_id) {
+            $cloudinary = new \Cloudinary\Cloudinary();
+
+            $cloudinary->uploadApi()->destroy(
+                $product->product_photo_public_id
+            );
         }
+
         $product->delete();
 
         return redirect()->to('product')->with('success', 'Delete Product Success');

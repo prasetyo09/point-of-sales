@@ -41,7 +41,22 @@
                 <td class="text-center">{{ $v->category->name }}</td>
                 <td class="text-center">
                     <div class="d-flex align-items-center gap-2">
-                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop" alt="Gambar" width="80" height="80" style="object-fit: cover">
+                        @php
+                        $productPhoto = $v->photo ?? null;
+
+                        $fallbackPhoto = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop';
+
+                        $avatarUrl = $productPhoto ?: $fallbackPhoto;
+                    @endphp
+
+                    <img
+                        src="{{ $avatarUrl }}"
+                        alt="User Photo"
+                        width="80"
+                        height="80"
+                        style="object-fit: cover"
+                        onerror="this.onerror=null; this.src='{{ $fallbackPhoto }}';"
+                    >
                         <div class="fw-semibold">
                             {{ $v->name }}
                         </div>

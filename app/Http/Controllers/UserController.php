@@ -187,11 +187,19 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    
+    public function destroy(User $user)
     {
-        $user = User::findOrFail($id);
+        if ($user->user_photo_public_id) {
+            $cloudinary = new \Cloudinary\Cloudinary();
+
+            $cloudinary->uploadApi()->destroy(
+                $user->user_photo_public_id
+            );
+        }
+
         $user->delete();
 
-        return redirect()->to('user')->with('success', 'User successfully deleted!');
+        return redirect()->to('user')->with('success', 'Delete User Success');
     }
 }
