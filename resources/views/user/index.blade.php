@@ -36,26 +36,8 @@
             <td class="text-center">{{ $index + 1 }}</td>
             <td class="text-center">
                 <div class="d-flex align-items-center gap-2">
-                    {{-- @php
-                        $fallbackPhoto = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop';
-                        $photoUrl = $v->photo
-                            ? Storage::disk('public')->url($v->photo)
-                            : $fallbackPhoto;
-                    @endphp
-
-                    <img
-                        src="{{ $photoUrl }}"
-                        alt="Gambar"
-                        width="80"
-                        height="80"
-                        style="object-fit: cover"
-                        onerror="this.onerror=null; this.src='{{ $fallbackPhoto }}';"
-                    >
-                    <div class="fw-semibold">
-                        {{ $v->name }}
-                    </div> --}}
                     @php
-                        $userPhoto = Auth::user()->user_photo ?? null;
+                        $userPhoto = $v->user_photo ?? null;
 
                         $fallbackPhoto = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop';
 
@@ -64,7 +46,7 @@
 
                     <img
                         src="{{ $avatarUrl }}"
-                        alt="Users Photo"
+                        alt="User Photo"
                         width="80"
                         height="80"
                         style="object-fit: cover"
