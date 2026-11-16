@@ -147,7 +147,19 @@ class ProductController extends Controller
 
         // Hapus foto lama setelah database berhasil diperbarui
         if ($newPublicId && $oldPublicId) {
-            $cloudinary->uploadApi()->destroy($oldPublicId);
+
+            $result = $cloudinary->uploadApi()->destroy(
+                $oldPublicId,
+                ['invalidate' => true]
+            );
+
+            // Periksa hasil penghapusan
+            if (($result['result'] ?? null) !== 'ok') {
+                \Log::warning('Cloudinary old product photo was not deleted', [
+                    'public_id' => $oldPublicId,
+                    'result' => $result
+                ]);
+            }
         }
         return redirect()->to('product')->with('success', 'Update Product Success');
     }

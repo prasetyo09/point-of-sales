@@ -180,14 +180,29 @@
 
     <!-- Sidebar Profile Card (Dynamic Footer) -->
     <div class="sidebar-profile">
-        @php
+        {{-- @php
             $userPhoto = Auth::user()->user_photo ?? null;
             $avatarUrl = $userPhoto 
                 ? asset('storage/' . $userPhoto) 
                 : 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop';
         @endphp
         <img src="{{ $avatarUrl }}" alt="Administrator" class="sidebar-profile-img"
-        onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop'">
+        onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop'"> --}}
+
+        @php
+            $userPhoto = Auth::user()->user_photo ?? null;
+
+            $fallbackPhoto = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop';
+
+            $avatarUrl = $userPhoto ?: $fallbackPhoto;
+        @endphp
+
+        <img
+            src="{{ $avatarUrl }}"
+            alt="Administrator"
+            class="sidebar-profile-img"
+            onerror="this.onerror=null; this.src='{{ $fallbackPhoto }}';"
+        >
         <div class="sidebar-profile-info">
             <div class="sidebar-profile-name">{{ Auth::user()->name ?? 'Pengguna' }}</div>
             <div class="sidebar-profile-email">{{ Auth::user()->email ?? '' }}</div>
@@ -327,14 +342,29 @@
         <div class="dropdown ms-2">
             <button class="navbar-profile-btn dropdown-toggle no-print" type="button" data-bs-toggle="dropdown"
                 aria-expanded="false" id="profile-dropdown">
-                @php
+                {{-- @php
                     $userPhoto = Auth::user()->user_photo ?? null;
                     $avatarUrl = $userPhoto 
                         ? asset('storage/' . $userPhoto) 
                         : 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop';
                 @endphp
 
-                <img src="{{ $avatarUrl }}" alt="User Photo" class="navbar-profile-img" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop'">
+                <img src="{{ $avatarUrl }}" alt="User Photo" class="navbar-profile-img" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop'"> --}}
+
+                @php
+                    $userPhoto = Auth::user()->user_photo ?? null;
+
+                    $fallbackPhoto = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop';
+
+                    $avatarUrl = $userPhoto ?: $fallbackPhoto;
+                @endphp
+
+                <img
+                    src="{{ $avatarUrl }}"
+                    alt="Administrator"
+                    class="navbar-profile-img"
+                    onerror="this.onerror=null; this.src='{{ $fallbackPhoto }}';"
+                >
                 <span class="navbar-profile-name d-none d-md-inline">{{ Auth::user()->name ?? 'Pengguna' }}</span>
                 <i class="bi bi-chevron-down navbar-profile-caret"></i>
             </button>
