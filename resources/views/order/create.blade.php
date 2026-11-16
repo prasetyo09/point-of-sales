@@ -220,7 +220,7 @@
                                             <div class="card product-card shadow h-100 rounded-4 border-black">
                                                 <div class="product-image d-flex justify-content-center">
                                                     @php
-                                                        $productPhoto = $v->photo ?? null;
+                                                        $productPhoto = $product->photo ?? null;
 
                                                         $fallbackPhoto = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop';
 
