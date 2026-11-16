@@ -219,7 +219,14 @@
                                             onclick="addToCart({{ $product->id }})">
                                             <div class="card product-card shadow h-100 rounded-4 border-black">
                                                 <div class="product-image d-flex justify-content-center">
-                                                    <img src="{{ asset('storage/' . $product->photo) }}"
+                                                    @php
+                                                        $productPhoto = $v->photo ?? null;
+
+                                                        $fallbackPhoto = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop';
+
+                                                        $productUrl = $productPhoto ?: $fallbackPhoto;
+                                                    @endphp
+                                                    <img src="{{ $productUrl }}"
                                                         style="object-fit: cover">
                                                 </div>
                                                 <div class="card-body bg-black bg-opacity-25 card-text">

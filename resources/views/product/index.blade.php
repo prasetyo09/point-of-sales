@@ -41,7 +41,7 @@
                 <td class="text-center">{{ $v->category->name }}</td>
                 <td class="text-center">
                     <div class="d-flex align-items-center gap-2">
-                        @php
+                    @php
                         $productPhoto = $v->photo ?? null;
 
                         $fallbackPhoto = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop';
