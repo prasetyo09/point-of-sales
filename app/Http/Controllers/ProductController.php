@@ -112,7 +112,8 @@ class ProductController extends Controller
 
         $cloudinary = new Cloudinary();
         $newPublicId = null;
-
+        $oldPublicId = $product->product_photo_public_id;
+        
         if ($request->hasFile('photo'))
         {
             $upload = $cloudinary->uploadApi()->upload(
@@ -129,8 +130,6 @@ class ProductController extends Controller
 
             $newPublicId = $upload['public_id'];
         }
-
-        $oldPublicId = $product->product_photo_public_id;
 
         try {
             $product->update($data);
