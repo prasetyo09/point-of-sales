@@ -680,13 +680,6 @@
         }
 
         async function processPayment() {
-            let cartIdempotencyKey = (window.crypto && crypto.randomUUID) 
-            ? crypto.randomUUID() 
-            : 'idemp-' + Date.now() + '-' + Math.random().toString(36).substring(2, 9);
-
-            const payBtn = document.getElementById('btn-confirm-pay'); // ganti dengan id tombol bayarmu
-            if (payBtn) payBtn.disabled = true;
-
             if (cart.length === 0) {
                 alert('Cart is Empty')
                 return;
@@ -724,6 +717,13 @@
                 }
             }
 
+            let cartIdempotencyKey = (window.crypto && crypto.randomUUID) 
+            ? crypto.randomUUID() 
+            : 'idemp-' + Date.now() + '-' + Math.random().toString(36).substring(2, 9);
+
+            const payBtn = document.getElementById('btn-confirm-pay'); // ganti dengan id tombol bayarmu
+            if (payBtn) payBtn.disabled = true;
+
 
             try {
                 const response = await fetch("{{ route('order.store') }}", {
@@ -752,6 +752,7 @@
                 })
 
                 const result = await response.json();
+
                 if (!response.ok) {
                     throw new Error(result.message || 'Gagal memproses transaksi');
                 }
@@ -801,10 +802,12 @@
                 } else {
                     alert("Cash Transaction Successful!");
                     openReceipt(result.order_id);
+
                     await loadDashboardData();
 
                     const paymentModalEl = document.getElementById('paymentMethod');
                     const paymentModal = bootstrap.Modal.getInstance(paymentModalEl);
+
                     if (paymentModal) paymentModal.hide();
 
                     cart = [];
@@ -813,8 +816,9 @@
                 }
             } catch (error) {
                 console.log(error)
-                if (payBtn) payBtn.disabled = false;
                 alert(error.message);
+            } finally {
+                if (payBtn) payBtn.disabled = false;
             }
         }
         displayCart();
