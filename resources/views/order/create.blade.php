@@ -670,7 +670,7 @@
                 console.error("Periksa response JSON dari Controller store Anda, pastikan 'transaction_id' ada.");
                 return;
             }
-            const printUrl = `{{ url('receipt/print') }}/${transactionId}`;
+            const printUrl = `/receipt/print//${transactionId}`;
             document.getElementById('receiptFrame').src = printUrl;
 
             // Tampilkan modal struk
