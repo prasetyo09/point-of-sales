@@ -726,7 +726,7 @@
 
 
             try {
-                const response = await fetch("{{ route('order.store') }}", {
+                const response = await fetch("{{ route('order.store', [], false) }}", {
                     method: "POST",
                     headers: {
                         'Content-Type': 'application/json',
