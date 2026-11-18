@@ -826,7 +826,7 @@
 
         async function loadDashboardData(){
             try {
-                const response = await fetch("{{ route('orders.data') }}");
+                const response = await fetch("{{ route('order.data') }}");
 
                 if (!response.ok) {
                     throw new Error('Gagal mengambil data dashboard');
