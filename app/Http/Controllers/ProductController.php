@@ -54,6 +54,8 @@ class ProductController extends Controller
             'description' => $request->description
         ];
 
+        $cloudinary = new Cloudinary();
+
         if ($request->hasFile('photo')) {
             $upload = $cloudinary->uploadApi()->upload(
                 $request->file('photo')->getRealPath(),
