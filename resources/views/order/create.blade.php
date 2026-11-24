@@ -316,7 +316,7 @@
                         <div class="col-lg-6">
                             <div class="card border-0 shadow-sm rounded-3 p-3 bg-white h-100">
                                 <h6 class="fw-bold text-success mb-3 d-flex align-items-center gap-2">
-                                    <i class="bi bi-person-lines-fill"></i> Customer Data
+                                    <i class="bi bi-person-lines-fill"></i> Customer Data (Online Payment Only)
                                 </h6>
 
                                 <div class="mb-3">
