@@ -38,7 +38,7 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Product $product)
     {
         // dd(
         //     $request->all(),
@@ -61,7 +61,7 @@ class ProductController extends Controller
                 $request->file('photo')->getRealPath(),
                 [
                     'folder' => 'products',
-                    'public_id' => 'prodct_' . $product->id . '_' . Str::uuid(),
+                    'public_id' => 'product_' . $product->id . '_' . Str::uuid(),
                     'resource_type' => 'image',
                 ]
             );
