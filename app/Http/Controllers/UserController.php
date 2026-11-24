@@ -40,7 +40,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, User $user)
     {
         $request->validate([
             'name'     => 'required|string|max:255',
@@ -56,6 +56,8 @@ class UserController extends Controller
             'role_id' => $request->role_id,
             'password' => $request->password,
         ];
+
+        $cloudinary = new Cloudinary();
 
         if ($request->hasFile('user_photo')) {
             // $data['user_photo'] = $request->file('user_photo')->store('users', 'public');
